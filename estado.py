@@ -1,5 +1,6 @@
 import json
 import os
+import subprocess
 
 def estado(ssh):
     print("Ha continuación se mostrarán las conexiones activas entre este ordenador y el resto de dispositivos.")
@@ -14,21 +15,34 @@ def estado(ssh):
     print(direcciones_dict.get("gestion")[cont_gestion])
     for direcciones in direcciones_dict.get("gestion"):
         print("direcciones = " + direcciones)
-        gestion = os.system("ping -n 2 " + direcciones)
-        response_gestion.append(gestion)
+        p = subprocess.Popen(['ping', '-n', '2', '-w', '2', direcciones])
+        p.wait()
+        if p.poll() == 0:
+            response_gestion.append(0)
+        else:
+            response_gestion.append(1)
+        #gestion = os.system("ping -n 2 " + direcciones)
+
 
         print("La respuesta es:")
 
         cont_gestion = cont_gestion + 1
-        #print(direcciones.gestion)
-    print(response_gestion[2])
 
     for direcciones in direcciones_dict.get("datos"):
-        datos = os.system("ping -n 2 " + direcciones)
-        response_datos.append(datos)
+        p = subprocess.Popen(['ping', '-n', '2', '-w', '2', direcciones])
+        p.wait()
+        if p.poll() == 0:
+            response_datos.append(0)
+        else:
+            response_datos.append(1)
+
         cont_datos = cont_datos + 1
 
-    print("Las direcciones de la red de gestión disponibles son: ")
+    print("############################################################################################ \n")
+
+    print("Las direcciones de la RED DE GESTIÓN disponibles son: ")
+
+    print("")
 
     cont = 0;
     for x in response_gestion:
@@ -40,8 +54,14 @@ def estado(ssh):
 
         cont += 1
 
+    print("")
 
-    print("Las direcciones de la red de datos disponibles son:")
+    print("---------------------------------------------------------------------------------------------")
+
+    print("")
+    print("Las direcciones de la RED DE DATOS disponibles son:")
+
+    print(" ")
     cont = 0
     for y in response_datos:
         if (y == 0):
@@ -51,7 +71,8 @@ def estado(ssh):
 
         cont += 1
 
-
+    print("")
+    print("############################################################################################ \n")
    # print(response[cont])
 
 """     

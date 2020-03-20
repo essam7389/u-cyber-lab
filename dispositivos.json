@@ -3,6 +3,6 @@
   "names-gestion": ["Gestion", "Wifi-Router", "Router1-Gestion", "Router2-Gestion"],
   "gestion": ["192.168.2.1", "192.168.2.2", "192.168.2.3" ],
   "names-datos": ["Datos", "Router1-Datos", "Router2-Datos", "Red-Pi1", "Red-Pi2"],
-  "datos": ["172.16.1.1", "172.16.1.2", "172.16.1.2.3", "33.1.1.1", "33.1.2.1"]
+  "datos": ["172.16.1.1", "172.16.1.2", "172.16.1.3", "33.1.1.1", "33.1.2.1"]
 }
 

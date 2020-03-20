@@ -14,7 +14,7 @@ from estado import estado
 
 ssh = None
 
-host = '172.16.1.1'
+host = '192.168.2.1'
 port = 22
 username = 'admin'
 password = ''
@@ -52,12 +52,11 @@ elif (respuesta == "S"):
     stdin, stdout1, stderr = ssh.exec_command('/system clock set time=' + tiempo())
     stdin, stdout2, stderr = ssh.exec_command('/system clock set print')
 
-    print("Por favor seleccione una opción:")
-
-    print("1. Apagar Dispositivo "
-         "2. Reiniciar Dispositivo"
-         "3. Consultar Estado de los Dispositivos"
-         "4. Resetear Dispositivo")
+    print("Por favor seleccione una opción: \n")
+    print("1. Apagar Dispositivo \n"
+         "2. Reiniciar Dispositivo \n"
+         "3. Consultar Estado de los Dispositivos \n"
+         "4. Resetear Dispositivo \n")
 
     op = 0;
     print("Introduzca opción:")
