@@ -1,0 +1,24 @@
+{
+   "devices":[
+      {"name":"Wifi-Router",
+       "description":"Router encargado de ...",
+       "id":"R1",
+       "nics":{"management":
+                  {"IP":"192.168.2.1","type":"ethernet","nicname":"eth0","id":"R1_M0"},
+               "data":
+                  {"IP":"172.16.1.1","type":"ethernet","nicname":"eth1","id":"R1_D1"}
+           }
+      },
+      {"name":"Router R2",
+       "description":"Router encargado de ...",
+       "id":"R2",
+       "nics":{"management":
+                  {"IP":"192.168.2.1","type":"ethernet","nicname":"eth0","id":"R2_M0"},
+               "data":
+                  {"IP":"172.16.1.1","type":"ethernet","nicname":"eth1","id":"R2_D1"}
+           }
+      }]
+}
+
+
+
