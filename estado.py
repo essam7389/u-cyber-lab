@@ -2,7 +2,7 @@ import json
 import os
 import subprocess
 
-def estado(ssh):
+def estado():
     print("Ha continuación se mostrarán las conexiones activas entre este ordenador y el resto de dispositivos.")
     with open('dispositivos.json', 'r') as f:
         direcciones_dict = json.load(f)
@@ -73,6 +73,8 @@ def estado(ssh):
 
     print("")
     print("############################################################################################ \n")
+
+    ssh.close()
    # print(response[cont])
 
 """     

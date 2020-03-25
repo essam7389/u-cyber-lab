@@ -33,9 +33,9 @@ def reset(ssh, host, port, username, password):
     #stdin, stdout, stderr = ssh.exec_command(['/system backup load name='+backup]) #Se carga el backup.cfg y se reinstala la configuración inicial del dispositivo mikrotik
 
     stdin, stdout, stderr = ssh.exec_command('/system script add name="reinicio" source="/system reboot"')
-    stdin, stdout, stderr = ssh.exec_command('/system scheduler add name=reinicio start-time=' +  + ' on-event=reinicio')
+    stdin, stdout, stderr = ssh.exec_command('/system scheduler add name=reinicio start-time=' + tiempo(ssh) + ' on-event=reinicio')
 
 
-
+    ssh.close()
 
 
