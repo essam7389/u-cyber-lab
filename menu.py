@@ -1,6 +1,10 @@
 # Script para recuperación de la configuración por defecto de los Routers y Switches Mikrotik
 #Author: Alberto Antonio Perales Montero
+import sys
+
 import paramiko
+from paramiko import AuthenticationException, SSHException, BadHostKeyException
+
 from tiempo import tiempo
 from shutdown import apagar
 from Reset import reset
@@ -86,22 +90,33 @@ keyfile_path = 'private_key_file'
 
 def connection(host, port, username, password):
     # Create the SSH client.
-    ssh = paramiko.SSHClient()
+    try:
+        ssh = paramiko.SSHClient()
 
-    print("la dirección es = " + host)
-    # Setting the missing host key policy to AutoAddPolicy will silently add any missing host keys.
-    # Using WarningPolicy, a warning message will be logged if the host key is not previously known
-    # but all host keys will still be accepted.
-    # Finally, RejectPolicy will reject all hosts which key is not previously known.
-    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.load_system_host_keys()
-    # Connect to the host.
-    ssh.connect(host, port, username, password)
+        print("la dirección es = " + host)
+        # Setting the missing host key policy to AutoAddPolicy will silently add any missing host keys.
+        # Using WarningPolicy, a warning message will be logged if the host key is not previously known
+        # but all host keys will still be accepted.
+        # Finally, RejectPolicy will reject all hosts which key is not previously known.
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh.load_system_host_keys()
+        # Connect to the host.
+        ssh.connect(host, port, username, password)
 
-    print("Conexión realizada")
-    #tm = tiempo.tiempo()  # Calculamos el tiempo pasado en segundos desde el año 1970
+        print("Conexión realizada")
+        return (ssh)
+        #tm = tiempo.tiempo()  # Calculamos el tiempo pasado en segundos desde el año 1970
+    except AuthenticationException:
+        print("Authentication failed, please verify your credentials: %s")
+        sys.exit(1)
+    except SSHException as sshException:
+        print("Unable to establish SSH connection: %s" % sshException)
+        sys.exit(1)
+    except BadHostKeyException as badHostKeyException:
+        print("Unable to verify server's host key: %s" % badHostKeyException)
+        sys.exit(1)
 
-    return(ssh)
+
 print("El patron del dispositivo es = ")
 print(patron.search(dispositivo))
 
@@ -110,18 +125,21 @@ if (patron.findall(dispositivo, 0,4)): #Se comprueba que lo que el usuario ha en
     if (dispositivo == "0"): #1er Caso si se selecciona 0 significa que la acción de Apagar, Reiniciar o Resetear corresponde a todos los dispositivos
         if(op == "1"):
 
-            for direccion in direcciones_dict.get("gestion"):
-                ssh = connection(direccion, port, username, password)
+            for direccion in direcciones_dict.get("devices"):
+                ip = direccion.get("nics")['management']['IP']
+                ssh = connection(ip, port, username, password)
                 apagar(ssh)
 
         elif(op=="2"):
-            for direccion in direcciones_dict.get("gestion"):
-                ssh = connection(direccion, port, username, password)
+            for direccion in direcciones_dict.get("devices"):
+                ip = direccion.get("nics")['management']['IP']
+                ssh = connection(ip, port, username, password)
                 reboot(ssh)
         elif(op=="3"):
-            for direccion in direcciones_dict.get("gestion"):
-                ssh = connection(direccion, port, username, password)
-                reset(ssh, direccion, port, username, password)
+            for direccion in direcciones_dict.get("devices"):
+                ip = direccion.get("nics")['management']['IP']
+                ssh = connection(ip, port, username, password)
+                reset(ssh, ip, port, username, password)
 
 
     else: #En caso contrario corresponde al número de dispositivos que escribiese el usuario por teclado
@@ -130,8 +148,8 @@ if (patron.findall(dispositivo, 0,4)): #Se comprueba que lo que el usuario ha en
 
             while (cont < len(dispositivo)): #Mientras el contador (que comienza en 0) sea < el nº de direcciones que hay en el JSON itera.
                 numero = int(dispositivo[cont])
-                direccion = direcciones_dict.get("gestion")[numero-1]#Se le resta 1 porque al acceder al JSON la primera posición es la 0
-                ssh = connection(direccion, port, username, password) #Se llama a connection y se obtiene la conexión ssh para una dirección de dispositivo dada.
+                ip = direcciones_dict.get("devices")[numero-1].get("nics")['management']['IP']#Se le resta 1 porque al acceder al JSON la primera posición es la 0
+                ssh = connection(ip, port, username, password) #Se llama a connection y se obtiene la conexión ssh para una dirección de dispositivo dada.
                 apagar(ssh) #Se llama a la función apagar que apagará el dispositivo enviándo el comando mediante dicha conexión ssh
                 cont += 1
 
@@ -140,17 +158,17 @@ if (patron.findall(dispositivo, 0,4)): #Se comprueba que lo que el usuario ha en
                 numero = int(dispositivo[cont])
                 print("El numero es = ")
                 print(numero)
-                direccion = direcciones_dict.get("gestion")[numero-1] #Se le resta 1 porque al acceder al JSON la primera posición es la 0
-                print("La dirección del dispositivo a reiniciar es = " + direccion)
-                ssh = connection(direccion, port, username, password)
+                ip = direcciones_dict.get("devices")[numero-1].get("nics")['management']['IP'] #Se le resta 1 porque al acceder al JSON la primera posición es la 0
+                print("La dirección del dispositivo a reiniciar es = " + ip)
+                ssh = connection(ip, port, username, password)
                 reboot(ssh)
                 cont += 1
         elif (op == "3"):
             while (cont < len(dispositivo)):
                 numero = int(dispositivo[cont])
-                direccion = direcciones_dict.get("gestion")[numero-1]#Se le resta 1 porque al acceder al JSON la primera posición es la 0
-                ssh = connection(direccion, port, username, password)
-                reset(ssh,direccion, port, username, password)
+                ip = direcciones_dict.get("devices")[numero - 1].get("nics")['management']['IP']#Se le resta 1 porque al acceder al JSON la primera posición es la 0
+                ssh = connection(ip, port, username, password)
+                reset(ssh, ip, port, username, password)
                 cont += 1
 
 
