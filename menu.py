@@ -36,10 +36,11 @@ analizador.add_argument('--version', action='version',
 
 
 argumento = analizador.parse_args()
+dispositivo = []
 
 print(argumento)
 todos = argumento.todos
-dispositivo = argumento.dispositivo
+
 '''if(analizador.parse_args()):
     
     print(argumento)
@@ -85,7 +86,12 @@ elif (argumento.operacion == 'Reiniciar'):
 
     #reboot()
 elif (argumento.operacion == 'Consultar'):
-    estado()
+    print("0. Todos los dispositivos \n"
+          "1. Dispositivo Switch-CRS \n"
+          "2. Dispositivo Router-Wifi \n"
+          "3. Dispositivo Router1 \n"
+          "4. Dispositivo Router2 \n"
+          "5. Dispositivo Router3 \n")
 elif (argumento.operacion == 'Resetear'):
     print(
         "Por favor seleccione uno o varios dispositivos que desee resetear, en caso de querer varias opciones deberá introducirlas seguidamente y sin espacios. "
@@ -187,11 +193,18 @@ if (todos): #1er Caso si se selecciona 0 significa que la acción de Apagar, Rei
             ssh = connection(ip, port, username, password)
             reboot(ssh)
     elif(argumento.operacion=="Resetear"):
-        estado(dispositivo)
+        for direccion in direcciones_dict.get("devices"):
+            ip = direccion.get("nics")['management']['IP']
+            ssh = connection(ip, port, username, password)
+            reset(ssh, ip, port, username, password)
+
+    elif(argumento.operacion == "Consultar"):
+        estado((dispositivo))
 
 
 
 else: #En caso contrario corresponde al número de dispositivos que escribiese el usuario por teclado
+    dispositivo = argumento.dispositivo
     cont = 0
     if (argumento.operacion == "Apagar"):
 

@@ -8,15 +8,27 @@ def reset(ssh, host, port, username, password):
     dir = "C:\\Users\Aru-kun\Documents\TFG\Backups";
     print(os.listdir(dir))
 
-    print("Por favor introduzca \ y seguidamente el nombre de la carpeta a la cuál desea acceder")
+    print("Por favor introduzca el nombre de la carpeta a la cuál desea acceder")
 
     carpeta = input();
     dir = dir+carpeta;
 
-    print(" Introduzca el nombre del backup que quiera cargar: ")
+    print(" Introduzca el nombre del backup que quiera cargar, tenga en cuenta que si carga un backup de manera equivocada en un dispositivo "
+          "puede tener consecuencias desconocidas.: ")
     print(os.listdir(dir));
 
     backup = input();
+
+    print("El backup seleccionado es= " + backup)
+    print("¿Está seguro que desea cargar dicho Backup? y/n")
+
+    confirmacion = input()
+
+    if(confirmacion == "n"):
+        print("Cancelando...")
+        ssh.close()
+        exit()
+
     print("Cargando archivo en el dispositivo seleccionado...");
 
     ssh.connect(host, port, username, password)

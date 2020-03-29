@@ -7,41 +7,60 @@ def estado(list):
     with open('dispositivos.json', 'r') as f:
         direcciones_dict = json.load(f)
 
-    cont_gestion = 0
-    cont_datos = 0
+    cont = 0
     response_gestion = []
     response_datos = []
-
-
-    while(cont_gestion<len(list)):
-
-        i = list[cont_gestion]
-        ip_gestion = direcciones_dict.get("devices")[i-1].get("nics")['management']
-        p = subprocess.Popen(['ping', '-n', '2', '-w', '2', ip_gestion])
-        p.wait()
-        if p.poll() == 0:
-            response_gestion.append(0)
-        else:
-            response_gestion.append(1)
-        #gestion = os.system("ping -n 2 " + direcciones)
-
-
-        print("La respuesta es:")
-
-        cont_gestion = cont_gestion + 1
-
-    while(cont_datos<len(list)):
-        i = list[cont_datos]
-        if(i != 2):
-            ip_datos = direcciones_dict.get("devices")[i - 1].get("nics")['datos']['IP']
-            p = subprocess.Popen(['ping', '-n', '2', '-w', '2', ip_datos])
+    if(list== []):
+        for direccion in direcciones_dict.get("devices"):
+            ip_gestion = direccion.get("nics")['management']['IP']
+            p = subprocess.Popen(['ping', '-n', '2', '-w', '2', ip_gestion])
             p.wait()
             if p.poll() == 0:
-                response_datos.append(0)
+                response_gestion.append(0)
+            else:
+                response_gestion.append(1)
+            if(direccion['id']!="WR"):
+                ip_datos = direccion.get('nics')['data']['IP']
+                p = subprocess.Popen(['ping', '-n', '2', '-w', '2', ip_datos])
+                p.wait()
+
+                if p.poll() == 0:
+                    response_datos.append(0)
+                else:
+                    response_datos.append(1)
             else:
                 response_datos.append(1)
 
-        cont_datos = cont_datos + 1
+
+
+    else:
+        while(cont<len(list)):
+
+            i = list[cont]
+            ip_gestion = direcciones_dict.get("devices")[i-1].get("nics")['management']['IP']
+            p = subprocess.Popen(['ping', '-n', '2', '-w', '2', ip_gestion])
+            p.wait()
+            if p.poll() == 0:
+                response_gestion.append(0)
+            else:
+                response_gestion.append(1)
+
+            if (i != 2):
+                ip_datos = direcciones_dict.get("devices")[i - 1].get("nics")['data']['IP']
+                p = subprocess.Popen(['ping', '-n', '2', '-w', '2', ip_datos])
+                p.wait()
+                if p.poll() == 0:
+                    response_datos.append(0)
+                else:
+                    response_datos.append(1)
+            else:
+                response_datos.append(1)
+            #gestion = os.system("ping -n 2 " + direcciones)
+
+
+            print("La respuesta es:")
+
+            cont = cont + 1
 
     print("############################################################################################ \n")
 
@@ -53,9 +72,9 @@ def estado(list):
     for x in response_gestion:
 
         if(x == 0):
-            print(direcciones_dict.get("names-gestion")[cont] + " -------------> ACTIVO" )
+            print(direcciones_dict.get("devices")[cont]['name'] + " -------------> ACTIVO" )
         else:
-            print(direcciones_dict.get("names-gestion")[cont] + " -------------> INACTIVO" )
+            print(direcciones_dict.get("devices")[cont]['name'] + " -------------> INACTIVO" )
 
         cont += 1
 
@@ -70,9 +89,9 @@ def estado(list):
     cont = 0
     for y in response_datos:
         if (y == 0):
-            print(direcciones_dict.get("names-datos")[cont] + " -------------> ACTIVO")
+            print(direcciones_dict.get("devices")[cont]['name'] + " -------------> ACTIVO")
         else:
-            print(direcciones_dict.get("names-datos")[cont] + " -------------> INACTIVO")
+            print(direcciones_dict.get("devices")[cont]['name'] + " -------------> INACTIVO")
 
         cont += 1
 
