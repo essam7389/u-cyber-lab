@@ -187,10 +187,7 @@ if (todos): #1er Caso si se selecciona 0 significa que la acción de Apagar, Rei
             ssh = connection(ip, port, username, password)
             reboot(ssh)
     elif(argumento.operacion=="Resetear"):
-        for direccion in direcciones_dict.get("devices"):
-            ip = direccion.get("nics")['management']['IP']
-            ssh = connection(ip, port, username, password)
-            reset(ssh, ip, port, username, password)
+        estado(dispositivo)
 
 
 
@@ -207,7 +204,7 @@ else: #En caso contrario corresponde al número de dispositivos que escribiese e
 
     elif (argumento.operacion == "Reiniciar"):
         while (cont < len(dispositivo)):
-            numero = int(dispositivo[cont])
+            numero = dispositivo[cont]
             print("El numero es = ")
             print(numero)
             ip = direcciones_dict.get("devices")[numero-1].get("nics")['management']['IP'] #Se le resta 1 porque al acceder al JSON la primera posición es la 0
@@ -215,13 +212,16 @@ else: #En caso contrario corresponde al número de dispositivos que escribiese e
             ssh = connection(ip, port, username, password)
             reboot(ssh)
             cont += 1
-    elif (argumento.operacion == "3"):
+    elif (argumento.operacion == "Resetear"):
         while (cont < len(dispositivo)):
-            numero = int(dispositivo[cont])
+            numero = dispositivo[cont]
             ip = direcciones_dict.get("devices")[numero - 1].get("nics")['management']['IP']#Se le resta 1 porque al acceder al JSON la primera posición es la 0
             ssh = connection(ip, port, username, password)
             reset(ssh, ip, port, username, password)
             cont += 1
+
+    elif (argumento.operacion == "Consultar"):
+        estado(dispositivo)
 
 '''
 else: #En caso contrario imprime error
@@ -231,3 +231,26 @@ else: #En caso contrario imprime error
 
 
    # print("Restaurando...")
+
+
+
+
+
+'''
+Cuestiones:
+
+    1. Mejora de código: Se puede establecer la definición de la función "Connection" en un archivo aparte de tal forma que
+        se pueda llamar a dicha función sin perder la conexión (variable ssh en memoria). Esto posibilitaría la mejora del código y
+        su legibilidad ya qué nos permitiría eliminar los bucles y quedarnos con solo dos posibles casos de instrucciones condicionales.
+        Una de ellas se encargaría de comprobar la operación (todos o un dispositivo concreto) y la otra de seleccionar la acción concreta
+        (Apagar, Reiniciar...), de tal forma que enviaríamos la operación como un argumento de dicha llamada a función realizando así los bucles
+        y la instrucción condicional dentro de la acción concreta.
+        
+    2.  Mejora de Menú: Se puede establecer como segunda opción un menú mediante terminal de comandos, más interactivo y obviando argparse como se
+        realizó en versiones anteriores con la salvedad de que el usuario podrá elegir entre un modo u otro (argparse o normal)
+        
+    3. 
+
+
+
+'''

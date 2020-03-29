@@ -2,7 +2,7 @@ import json
 import os
 import subprocess
 
-def estado():
+def estado(list):
     print("Ha continuación se mostrarán las conexiones activas entre este ordenador y el resto de dispositivos.")
     with open('dispositivos.json', 'r') as f:
         direcciones_dict = json.load(f)
@@ -11,11 +11,13 @@ def estado():
     cont_datos = 0
     response_gestion = []
     response_datos = []
-    direcciones = 0
-    print(direcciones_dict.get("gestion")[cont_gestion])
-    for direcciones in direcciones_dict.get("gestion"):
-        print("direcciones = " + direcciones)
-        p = subprocess.Popen(['ping', '-n', '2', '-w', '2', direcciones])
+
+
+    while(cont_gestion<len(list)):
+
+        i = list[cont_gestion]
+        ip_gestion = direcciones_dict.get("devices")[i-1].get("nics")['management']
+        p = subprocess.Popen(['ping', '-n', '2', '-w', '2', ip_gestion])
         p.wait()
         if p.poll() == 0:
             response_gestion.append(0)
@@ -28,13 +30,16 @@ def estado():
 
         cont_gestion = cont_gestion + 1
 
-    for direcciones in direcciones_dict.get("datos"):
-        p = subprocess.Popen(['ping', '-n', '2', '-w', '2', direcciones])
-        p.wait()
-        if p.poll() == 0:
-            response_datos.append(0)
-        else:
-            response_datos.append(1)
+    while(cont_datos<len(list)):
+        i = list[cont_datos]
+        if(i != 2):
+            ip_datos = direcciones_dict.get("devices")[i - 1].get("nics")['datos']['IP']
+            p = subprocess.Popen(['ping', '-n', '2', '-w', '2', ip_datos])
+            p.wait()
+            if p.poll() == 0:
+                response_datos.append(0)
+            else:
+                response_datos.append(1)
 
         cont_datos = cont_datos + 1
 
@@ -74,7 +79,7 @@ def estado():
     print("")
     print("############################################################################################ \n")
 
-    ssh.close()
+
    # print(response[cont])
 
 """     
