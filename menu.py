@@ -6,6 +6,7 @@ import paramiko
 from paramiko import AuthenticationException, SSHException, BadHostKeyException
 
 from tiempo import tiempo
+from sshConnection import connection
 from shutdown import apagar
 from Reset import reset
 from reboot import reboot
@@ -132,7 +133,7 @@ print("la pass es = "+ password)
 ssh = None
 keyfile_path = 'private_key_file'
 
-
+'''
 def connection(host, port, username, password):
     # Create the SSH client.
     try:
@@ -168,7 +169,7 @@ def connection(host, port, username, password):
 
     return (ssh)
 
-
+'''
 #print("El patron del dispositivo es = ")
 #print(patron.search(dispositivo))
 
@@ -262,7 +263,8 @@ Cuestiones:
     2.  Mejora de Menú: Se puede establecer como segunda opción un menú mediante terminal de comandos, más interactivo y obviando argparse como se
         realizó en versiones anteriores con la salvedad de que el usuario podrá elegir entre un modo u otro (argparse o normal)
         
-    3. 
+    3. Pregunta de tribunal: ¿Por qué has usado Python? ¿Por qué has realizado el código de estructurada (paradigma estructurado) en vez de con un paradigma 
+        orientado a objetos?
 
 
 

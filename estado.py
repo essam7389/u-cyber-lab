@@ -68,13 +68,26 @@ def estado(list):
 
     print("")
 
+    print(" Nombre      |        IP        |       Estado      ")
+    print("----------------------------------------------------")
+    print("")
+
     cont = 0;
+    i = 0
+
     for x in response_gestion:
 
-        if(x == 0):
-            print(direcciones_dict.get("devices")[cont]['name'] + " -------------> ACTIVO" )
+        if (list != []):
+            i = list[cont]-1
         else:
-            print(direcciones_dict.get("devices")[cont]['name'] + " -------------> INACTIVO" )
+            i = cont;
+
+        ip = direcciones_dict.get("devices")[i].get('nics')['management']['IP']
+        if(x == 0):
+
+            print(direcciones_dict.get("devices")[i]['name'] + "         " + ip + "        ACTIVO")
+        else:
+            print(direcciones_dict.get("devices")[i]['name'] + "         " + ip + "        INACTIVO")
 
         cont += 1
 
@@ -83,15 +96,29 @@ def estado(list):
     print("---------------------------------------------------------------------------------------------")
 
     print("")
-    print("Las direcciones de la RED DE DATOS disponibles son:")
 
-    print(" ")
+    print("Las direcciones de la RED DE DATOS disponibles son: \n")
+
+
+    print(" Nombre      |        IP        |       Estado      ")
+    print("----------------------------------------------------")
+
+    print("")
+
     cont = 0
+    i = 0
+    ip = 0;
     for y in response_datos:
-        if (y == 0):
-            print(direcciones_dict.get("devices")[cont]['name'] + " -------------> ACTIVO")
+        if (list != []):
+            i = list[cont]-1
         else:
-            print(direcciones_dict.get("devices")[cont]['name'] + " -------------> INACTIVO")
+            i = cont;
+        if (y == 0 and i != 1):
+            ip = direcciones_dict.get("devices")[i].get('nics')['data']['IP']
+            print(direcciones_dict.get("devices")[i]['name'] + "         " + ip + "        ACTIVO")
+        elif(i != 1):
+            ip = direcciones_dict.get("devices")[i].get('nics')['data']['IP']
+            print(direcciones_dict.get("devices")[i]['name'] + "         " + ip + "        INACTIVO")
 
         cont += 1
 
