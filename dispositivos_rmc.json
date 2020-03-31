@@ -13,9 +13,7 @@
        "description":"Router encargado de ...",
        "id":"R2",
        "nics":{"management":
-                  {"IP":"192.168.2.1","type":"ethernet","nicname":"eth0","id":"R2_M0"},
-               "data":
-                  {"IP":"172.16.1.1","type":"ethernet","nicname":"eth1","id":"R2_D1"}
+                  {"IP":"192.168.2.1","type":"ethernet","nicname":"eth0","id":"R2_M0"}
            }
       }]
 }
