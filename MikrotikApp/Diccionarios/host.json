@@ -1,0 +1,128 @@
+{
+  "hosts":[
+      {"username": "root",
+        "password": "toor",
+        "port": "22",
+        "name":"Raspberry Pi 1",
+       "description":"Raspberry Pi correspondondiente al Router 1, ",
+       "id":"RP_R1_1",
+        "team": "RT",
+        "SO": "Kali Linux",
+       "nics":{"management":
+                  {"IP":"192.168.2.11","type":"Wifi","nicname":"w0","id":"RP1_M1"},
+               "data":
+                  {"IP":"33.1.1.2","type":"ethernet","nicname":"eth2","id":"RP1_D2"}
+           }
+      },
+    {"username": "ucase",
+      "password": "ucase",
+      "port": "22",
+      "name":"Raspberry Pi 2",
+       "description":"Raspberry Pi correspondondiente al Router 1, ",
+       "id":"RP_R1_2",
+      "team": "BT",
+      "SO": "Ubuntu Mate",
+       "nics":{"management":
+                  {"IP":"192.168.2.12","type":"Wifi","nicname":"w0","id":"RP1_M2"},
+               "data":
+                  {"IP":"33.1.1.3","type":"ethernet","nicname":"eth3","id":"RP2_D3"}
+           }
+      },
+    { "username": "ucase",
+      "password": "ucase",
+      "port": "22",
+      "name":"Raspberry Pi 3",
+       "description":"Raspberry Pi correspondondiente al Router 1, ",
+       "id":"RP_R1_3",
+       "team": "BT",
+      "SO": "Ubuntu Mate",
+       "nics":{"management":
+                  {"IP":"192.168.2.13","type":"Wifi","nicname":"w0","id":"RP3_M3"},
+               "data":
+                  {"IP":"33.1.1.4","type":"ethernet","nicname":"eth4","id":"RP3_D4"}
+           }
+      },
+    { "username": "ucase",
+      "password": "ucase",
+      "port": "22",
+      "name":"Raspberry Pi 4",
+       "description":"Raspberry Pi correspondondiente al Router 2, ",
+       "id":"RP_R2_1",
+       "team": "RT",
+      "SO": "Kali Linux",
+       "nics":{"management":
+                  {"IP":"192.168.2.14","type":"Wifi","nicname":"w0","id":"RP4_M4"},
+               "data":
+                  {"IP":"33.1.2.2","type":"ethernet","nicname":"eth2","id":"RP4_D2"}
+           }
+      },
+    { "username": "ucase",
+      "password": "ucase",
+      "port": "22",
+      "name":"Raspberry Pi 5",
+       "description":"Raspberry Pi correspondondiente al Router 2, ",
+       "id":"RP_R2_2",
+      "SO": "Kali Linux",
+       "nics":{"management":
+                  {"IP":"192.168.2.15","type":"Wifi","nicname":"w0","id":"RP5_M5"},
+               "data":
+                  {"IP":"33.1.2.3","type":"ethernet","nicname":"eth3","id":"RP5_D3"}
+           }
+      },
+    { "username": "ucase",
+      "password": "ucase",
+      "port": "22",
+      "name":"Raspberry Pi 6",
+       "description":"Raspberry Pi correspondondiente al Router 2, ",
+       "id":"RP_R2_3",
+      "SO": "Kali Linux",
+       "nics":{"management":
+                  {"IP":"192.168.2.16","type":"Wifi","nicname":"w0","id":"RP6_M6"},
+               "data":
+                  {"IP":"33.1.1.4","type":"ethernet","nicname":"eth4","id":"RP6_D4"}
+           }
+      },
+    { "username": "ucase",
+      "password": "ucase",
+      "port": "22",
+      "name":"Raspberry Pi 7",
+       "description":"Raspberry Pi correspondondiente al Router 3, ",
+       "id":"RP_R3_1",
+       "team": "BT",
+      "SO": "Ubuntu Mate",
+       "nics":{"management":
+                  {"IP":"192.168.2.17","type":"Wifi","nicname":"w0","id":"RP7_M7"},
+               "data":
+                  {"IP":"33.1.3.2","type":"ethernet","nicname":"eth2","id":"RP7_D2"}
+           }
+      },
+    { "username": "ucase",
+      "password": "ucase",
+      "port": "22",
+      "name":"Raspberry Pi 8",
+       "description":"Raspberry Pi correspondondiente al Router 3, ",
+       "id":"RP_R3_2",
+      "team": "BT",
+      "SO": "Ubuntu Mate",
+       "nics":{"management":
+                  {"IP":"192.168.2.18","type":"Wifi","nicname":"w0","id":"RP8_M8"},
+               "data":
+                  {"IP":"33.1.3.3","type":"ethernet","nicname":"eth3","id":"RP8_D3"}
+           }
+      },
+    { "username": "ucase",
+      "password": "ucase",
+      "port": "22",
+      "name":"Raspberry Pi 9",
+       "description":"Raspberry Pi correspondondiente al Router 3, ",
+       "id":"RP_R3_3",
+       "team": "BT",
+      "SO": "Ubuntu Mate",
+       "nics":{"management":
+                  {"IP":"192.168.2.19","type":"Wifi","nicname":"w0","id":"RP9_M9"},
+               "data":
+                  {"IP":"33.1.1.4","type":"ethernet","nicname":"eth4","id":"RP9_D4"}
+           }
+      }
+    ]
+}

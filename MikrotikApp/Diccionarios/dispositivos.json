@@ -1,0 +1,74 @@
+{
+  "devices":[
+      {
+        "username": "admin",
+        "password": "",
+        "port": "22",
+        "name":"Switch",
+       "description":"Switch, ",
+       "id":"SW",
+       "nics":{"management":
+                  {"IP":"192.168.2.1","type":"ethernet","nicname":"eth0","id":"SW_M0"},
+               "data":
+                  {"IP":"172.16.1.1","type":"ethernet","nicname":"eth1","id":"R1_D1"}
+           }
+      },
+      { "username": "admin",
+        "password": "",
+        "port": "22",
+        "name":"Wifi-Router",
+       "description":"Wifi Router encargado de proporcionar la red Wifi de Ucase para la gestión de las raspberry Pi",
+       "id":"WR",
+       "nics":{"management":
+                  {"IP":"192.168.2.2","type":"Wifi","nicname":"Wifi","id":"WR_M1"}
+           }
+      },
+    { "username": "admin",
+      "password": "",
+      "port": "22",
+      "name":"Router 1",
+       "description":"Router 1 que contendrá a 3 dispositivos de tipo Raspberry Pi correspondiente al Blue Team ",
+       "id":"R1",
+       "nics":{"management":
+                  {"IP":"192.168.2.3","type":"ethernet","nicname":"eth3","id":"R1_M2"},
+               "data":
+                  {"IP":"172.16.1.2","type":"ethernet","nicname":"eth5","id":"R1_D1"},
+                "host1": {"IP": "33.1.1.2", "type": "ethernet", "nicname": "RP_R1_1"},
+                "host2": {"IP": "33.1.1.3", "type": "ethernet", "nicname": "RP_R1_2"},
+                "host3": {"IP": "33.1.1.4", "type": "ethernet", "nicname": "RP_R1_3"}
+           }
+      },
+    {"username": "admin",
+      "password": "",
+      "port": "22",
+      "name":"Router 2",
+       "description":"Router 2 que contendrá a 3 dispositivos de tipo Raspberry Pi correspondiente al Red Team ",
+       "id":"R2",
+       "nics":{"management":
+                  {"IP":"192.168.2.4","type":"ethernet","nicname":"eth4","id":"R2_M3"},
+               "data":
+                  {"IP":"172.16.1.3","type":"ethernet","nicname":"eth6","id":"R2_D2"},
+                "host1": {"IP": "33.1.2.2", "type": "ethernet", "nicname": "RP_R2_1"},
+                "host2": {"IP": "33.1.2.3", "type": "ethernet", "nicname": "RP_R2_2"},
+                "host3": {"IP": "33.1.2.4", "type": "ethernet", "nicname": "RP_R2_3"}
+           }
+      },
+
+    { "username": "admin",
+      "password": "",
+      "port": "22",
+      "name":"Router 3",
+       "description":"Router 3 que contendrá a 3 dispositivos de tipo Raspberry Pi correspondiente al Blue Team ",
+       "id":"R3",
+       "nics":{"management":
+                  {"IP":"192.168.2.5","type":"ethernet","nicname":"eth1","id":"R3_M4"},
+               "data":
+                  {"IP":"172.16.1.4","type":"ethernet","nicname":"eth7","id":"R3_D3"},
+                "host1": {"IP": "33.1.3.2", "type": "ethernet", "nicname": "RP_R3_1"},
+                "host2": {"IP": "33.1.3.3", "type": "ethernet", "nicname": "RP_R3_2"},
+                "host3": {"IP": "33.1.3.4", "type": "ethernet", "nicname": "RP_R3_3"}
+           }
+      }
+  ]
+}
+
