@@ -1,5 +1,5 @@
 from tkinter import *
-from MikrotikApp.JSONmethods import *
+from JSONmethods import *
 
 # Función que devuelve el tipo de operación según el RadioButtom seleccionado.
 # Devuelve "-a" para cuando se selecciona para todos los dispositivos

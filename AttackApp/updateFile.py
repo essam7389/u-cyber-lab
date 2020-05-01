@@ -1,19 +1,26 @@
-import scp as scp
 from scp import SCPClient
-from MikrotikApp.sshConnection import *
 
-def updateFile(ssh, ruta_archivo, sistema, nombre):
+def updateFile(ssh, accion, ruta_archivo, sistema, nombre):
 
     scp = SCPClient(ssh.get_transport())
 
-    if(sistema == "kali"):
-        #Para Kali Linux
-        scp.put(ruta_archivo,  remote_path='/root/Documents/script/' + nombre);
-    elif(sistema == "mate"):
-        #Para ubuntu mate
-        scp.put(ruta_archivo,  remote_path='/home/ucase/Documentos/'+nombre);
+    if(accion == "TrafficFlow"):
+        if(sistema == "Kali Linux"):
+            #Para Kali Linux
+            scp.put(ruta_archivo,  remote_path='/root/Documents/script/' + nombre);
+        elif(sistema == "Ubuntu Mate"):
+            #Para ubuntu mate
+            scp.put(ruta_archivo,  remote_path='/home/ucase/Documentos/'+nombre);
+    elif(accion == "SSHAttack"):
+        if (sistema == "Kali Linux"):
+            print("He entrado en SCP opcion SSHAttack")
+            # Para Kali Linux
+            scp.put(ruta_archivo, remote_path='/root/Documents/Diccionarios/' + nombre);
 
-    ssh.close()
+        elif (sistema == "Ubuntu Mate"):
+            # Para ubuntu mate
+            scp.put(ruta_archivo, remote_path='/home/ucase/Documentos/Diccionarios' + nombre);
+
 
 
 '''
