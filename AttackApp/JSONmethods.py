@@ -14,7 +14,7 @@ def existKey(lista, key):
 ruta_absoluta = "C:\\Users\\Aru-kun\\Documents\\TFG\\Scripts Python\\AttackApp\\Diccionarios\\"
 
 def getDevices():
-    with open('\\Diccionarios\\dispositivos.json', 'r') as f:  # Se realiza la lectura del fichero JSON
+    with open(ruta_absoluta+'dispositivos.json', 'r') as f:  # Se realiza la lectura del fichero JSON
         direcciones_dict = json.load(f)  # Se guardan los datos del fichero JSON en la variable direcciones_dict que nos permitirá acceder a los diversos campos del JSON
     return (direcciones_dict)
 
@@ -82,7 +82,7 @@ def getDevicesBynic(nics):
 
     for i in nics:
         for device in direcciones_dict.get("devices"):
-            if(device.get("id")==i or device.get("id")==getHostByIp(i)):
+            if(device.get("id")==i or device.get("id")==getDeviceByIp(i)):
                 values.append({'username': device.get("username"), 'password': device.get("password"), 'port': device.get("port"), 'name': device.get("name"), 'id': device.get("id"),
      'team': device.get("team"), 'tipo': device.get("tipo"), 'SO':device.get("SO"), 'description': device.get("description"), 'nics': device.get("nics")})
 
@@ -120,20 +120,25 @@ def getClientHostsBynic(nics):
     direcciones_dict = getHosts()
     values = []
 
-    print("He entrado en getJsonBynic")
-    print(direcciones_dict)
+    print("He entrado en getClientHostsBynic")
+    #print(direcciones_dict)
     clientes = direcciones_dict.fromkeys(direcciones_dict.keys())
     print(clientes)
-    print(nics)
+    #print(nics)
 
     for i in nics:
+        ip = re.search(exp, i)
+        if (ip):
+            i = getHostByIp(i)
         for cliente in direcciones_dict.get("hosts"):
-            if((cliente.get("id")==i or cliente.get("id")==getHostByIp(i))and cliente.get("tipo") == "Servidor"):
+            print("i = " + i)
+            if(cliente.get("id")==i and cliente.get("tipo") == "Cliente"):
+                print("He entrado en el IF")
                 values.append({'username': cliente.get("username"), 'password': cliente.get("password"), 'port': cliente.get("port"), 'name': cliente.get("name"), 'id': cliente.get("id"),
      'team': cliente.get("team"), 'tipo': cliente.get("tipo"), 'SO':cliente.get("SO"), 'description': cliente.get("description"), 'nics': cliente.get("nics")})
 
 
-
+    print("VALUES = ".format(values))
     clientes['hosts'] = values
     print("claves del diccionario: ")
     print(clientes.keys())
@@ -175,6 +180,7 @@ def getHostByIp(ip):
     print("ip = " + ip)
     print("He entrado en getHostByIp")
     for ip_host in direcciones_dict.get("hosts"):
+        print("ip-gestion = ", ip_host.get("nics")['management']['IP'])
         if(ip == ip_host.get("nics")['management']['IP'] or ip == ip_host.get("nics")['data']['IP']):
             print("Se comprueba la condición y es true")
             host = ip_host.get("id")
@@ -182,3 +188,19 @@ def getHostByIp(ip):
     print("El hosts es = ")
     print(host)
     return (host)
+
+
+def getDeviceByIp(ip):
+    direcciones_dict = getDevices()
+    device = ""
+    print("ip = " + ip)
+    print("He entrado en getHostByIp")
+    for ip_device in direcciones_dict.get("devices"):
+        print("ip-gestion = ", ip_device.get("nics")['management']['IP'])
+        if (ip == ip_device.get("nics")['management']['IP']):
+            print("Se comprueba la condición y es true")
+            device = ip_device.get("id")
+
+    print("El hosts es = ")
+    print(device)
+    return (device)

@@ -1,5 +1,5 @@
 from JSONmethods import *
-from TrafficGenerator import generarTrafico
+from TrafficGenerator import *
 from operationsServers import *
 from sshConnection import connection
 from scanPorts import *
@@ -28,9 +28,11 @@ def controller(accion, operacion, hosts_origen = [], hosts_destino = [], mask = 
         if (operacion == "-a"):
             clientes_hosts = getClientHosts()
             servidores_hosts = getServerHosts()
+        elif(suboperacion == "--s"):
+            clientes_hosts = getClientHostsBynic(hosts_origen)
         else:
             clientes_hosts = getClientHostsBynic(hosts_origen)
-            servidores_hosts = getServerHosts(hosts_destino)
+            servidores_hosts = getServerHostsBynic(hosts_destino)
 
     elif(accion == "Scan" or accion == "SSHAttack"):
         atacantes_hosts = getHostsBynic(hosts_origen)
@@ -41,15 +43,18 @@ def controller(accion, operacion, hosts_origen = [], hosts_destino = [], mask = 
             servidores_hosts = getServerHostsBynic(hosts_destino)
     else:
         if(operacion == "-a"):
-            clientes_hosts = getHosts()
-            servidores_hosts = getHosts()
+            clientes_hosts = getDevices()
+            servidores_hosts = getDevices()
         else:
-            clientes_hosts = getHostsBynic(hosts_origen)
-            servidores_hosts = getHostsBynic(hosts_destino)
+            clientes_hosts = getDevicesBynic(hosts_origen)
+            servidores_hosts = getDevicesBynic(hosts_destino)
 
     #Se realizan las llamadas a las diferentes funciones en base a la acción que se haya seleccionado
     if(accion == "TrafficFlow"):
-        generarTrafico(clientes_hosts, servidores_hosts)
+        if(suboperacion == "--s"):
+            apagarTrafico(clientes_hosts)
+        else:
+            generarTrafico(clientes_hosts, servidores_hosts, tiempo)
 
     elif(accion == "Servidor"):
         if(suboperacion == "-s"):
@@ -68,10 +73,12 @@ def controller(accion, operacion, hosts_origen = [], hosts_destino = [], mask = 
             print("IP = " + ip)
             for target in hosts_destino:
                 ssh = connection(ip, port, username, password)
-                resultado = scan(ssh, target, mascara)
-                if(GUI.state()):
+
+                resultado = scan(ssh, target, mascara.__next__())
+
+                if(GUI != None and GUI.state()):
                     print() #imprimirScanGUI(resultado)
-                mascara.__next__()
+
     elif(accion == "SSHAttack"):
         print("He entrado en la acción SSHAttack")
 
@@ -87,7 +94,7 @@ def controller(accion, operacion, hosts_origen = [], hosts_destino = [], mask = 
             sshAttack(ssh, hosts_destino, sistema, usernarme_dict="", password_dict="")
 
     elif(accion == "Monitorizar"):
-        monitorizar(hosts_destino)
+        monitorizar(hosts_origen, servidores_hosts)
 
 
 

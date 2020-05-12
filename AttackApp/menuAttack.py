@@ -42,12 +42,12 @@ else:
 group1 = analizador.add_argument_group('-d')
 group1.add_argument('--o', action="store", nargs='+', type=str, dest='origen', help="Uno o más hosts origen, se requiere "
                                                                         "de indicar mediante su ip correspondiente o su nic Ejemplo: (RP_R1_1)")
-group1.add_argument('--h', action="store", nargs='+', type=str, dest='target', help="Uno o más hosts destino, se requiere "
+group1.add_argument('--h', action="store", nargs='+', type=str, default="0", dest='target', help="Uno o más hosts destino, se requiere "
                                                                        "de indicar mediante su ip correspondiente o su nic Ejemplo: (RP_R1_1)")
-group1.add_argument('-t', action="store", nargs='+', type=str, dest='tiempo', help="Tiempo que durará los ataques y el tráfico (Opcional")
-group1.add_argument('-s', action="store_true", default=False, dest='s', help="Apagar o parar (sólo válido para Servidor y TrafficFlow")
-#group1.add_argument('--m', action='store', nargs='+', type=str, dest='mask',
-                    #help="Se debe dar el prefijo de cada una de las Ips introducidas")
+group1.add_argument('--t', action="store", nargs='+', type=str, dest='tiempo', default='0', help="Tiempo que durará los ataques y el tráfico (Opcional")
+group1.add_argument('--s', action="store_true", default=False, dest='s', help="Apagar o parar (sólo válido para Servidor y TrafficFlow")
+group1.add_argument('--m', action='store', nargs='+', type=str, dest='mask',
+                    help="Se debe dar el prefijo de cada una de las Ips introducidas")
 
 #group.add_argument('-d', nargs='+', type=str, dest='host', help="Uno o más hosts destino, se requiere "
                                                                    #     "de indicar mediante su ip correspondiente o su nic Ejemplo: (RP_R1_1)")
@@ -85,14 +85,22 @@ else: #En caso contrario corresponde al número de dispositivos que escribiese e
     if(argumento.operacion == "TrafficFlow"):
         hosts_destino = argumento.target
         hosts_origen = argumento.origen
-        time = argumento.tiempo
+        suboperacion = ""
+        print(argumento.tiempo)
+        if(argumento.tiempo == ""):
+            time = 0
+        else:
+            time = int(argumento.tiempo)
 
-        controller(argumento.operacion, "-d", hosts_origen, hosts_destino, tiempo=time)
+        if(argumento.s):
+            suboperacion = '--s'
+
+        controller(argumento.operacion, "-d", hosts_origen, hosts_destino, tiempo=time, suboperacion=suboperacion)
     elif(argumento.operacion == "Scan" or argumento.operacion == "SSHAttack"):
         host_destino = argumento.target
         host_origen = argumento.origen
-        #mascara = argumento.mask
-        controller(argumento.operacion, "-d", host_origen, host_destino)
+        mascara = argumento.mask
+        controller(argumento.operacion, "-d", host_origen, host_destino, mask=mascara)
     elif(argumento.operacion == "Servidor" or argumento.operacion == "Monitorizar"):
         host_destino = argumento.target
         if(not argumento.s):

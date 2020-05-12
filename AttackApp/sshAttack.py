@@ -1,6 +1,7 @@
 
 from scanPorts import *
 from updateFile import *
+
 #Lo primero que es necesario realizar es un escaneo de puertos con nmap, para obtener la IP de las RaspBerry Pi que tengan servidores apache2
 
 def sshAttack(ssh, targets, sistema, usernarme_dict = "", password_dict = ""):
@@ -12,8 +13,8 @@ def sshAttack(ssh, targets, sistema, usernarme_dict = "", password_dict = ""):
     ruta_usernames = "C:\\Users\\Aru-kun\\Documents\\TFG\\Scripts Python\\AttackApp\\Diccionarios\\usernames.txt"
     ruta_passwords = "C:\\Users\\Aru-kun\\Documents\\TFG\\Scripts Python\\AttackApp\\Diccionarios\\usernames.txt"
 
-    updateFile(ssh, "SSHAttack", ruta_usernames, sistema, "usernames.txt")
-    updateFile(ssh, "SSHAttack", ruta_passwords, sistema, "passwords.txt")
+    updateFile(ssh, ruta_origen=ruta_usernames, sistema=sistema, nombre="usernames.txt")
+    updateFile(ssh, ruta_origen=ruta_passwords, sistema=sistema, nombre="passwords.txt")
     for target in targets:
         print("")
 

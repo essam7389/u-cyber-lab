@@ -7,11 +7,12 @@
        "description":"Raspberry Pi correspondondiente al Router 1, ",
        "id":"RP_R1_1",
         "team": "RT",
+        "tipo": "Cliente",
         "SO": "Kali Linux",
        "nics":{"management":
                   {"IP":"192.168.2.11","type":"Wifi","nicname":"w0","id":"RP1_M1"},
                "data":
-                  {"IP":"33.1.1.2","type":"ethernet","nicname":"eth2","id":"RP1_D2"}
+                  {"IP":"33.1.2.4","type":"ethernet","nicname":"eth2","id":"RP1_D2"}
            }
       },
     {"username": "ucase",
@@ -86,7 +87,7 @@
        "nics":{"management":
                   {"IP":"192.168.2.16","type":"Wifi","nicname":"w0","id":"RP6_M6"},
                "data":
-                  {"IP":"33.1.2.4","type":"ethernet","nicname":"eth4","id":"RP6_D4"}
+                  {"IP":"33.1.2.5","type":"ethernet","nicname":"eth4","id":"RP6_D4"}
            }
       },
     { "username": "ucase",
