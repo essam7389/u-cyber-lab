@@ -1,3 +1,4 @@
+from GUIScanDisplay import *
 from JSONmethods import *
 from TrafficGenerator import *
 from operationsServers import *
@@ -57,7 +58,7 @@ def controller(accion, operacion, hosts_origen = [], hosts_destino = [], mask = 
             generarTrafico(clientes_hosts, servidores_hosts, tiempo)
 
     elif(accion == "Servidor"):
-        if(suboperacion == "-s"):
+        if(suboperacion == "--s"):
             desactivarServidor(servidores_hosts)
         else:
             print("Estoy llamando a la función")
@@ -73,11 +74,15 @@ def controller(accion, operacion, hosts_origen = [], hosts_destino = [], mask = 
             print("IP = " + ip)
             for target in hosts_destino:
                 ssh = connection(ip, port, username, password)
+                print("ip_objetivo = "+ target)
 
                 resultado = scan(ssh, target, mascara.__next__())
+                print("Resultado = ")
+                print(resultado)
 
                 if(GUI != None and GUI.state()):
-                    print() #imprimirScanGUI(resultado)
+                    print("resultado= \n" + resultado )
+                    #imprimirScanGUI(resultado)
 
     elif(accion == "SSHAttack"):
         print("He entrado en la acción SSHAttack")

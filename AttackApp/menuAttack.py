@@ -106,7 +106,7 @@ else: #En caso contrario corresponde al número de dispositivos que escribiese e
         if(not argumento.s):
             suboperacion = ""
         else:
-            suboperacion = "-s"
+            suboperacion = "--s"
         controller(argumento.operacion, "-d", host_origen, host_destino, suboperacion=suboperacion)
     elif(argumento.operacion == "Monitorizar"):
         host_destino = argumento.target

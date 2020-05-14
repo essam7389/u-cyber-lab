@@ -1,6 +1,6 @@
 from tkinter import *
 from JSONmethods import *
-
+import re
 # Función que devuelve el tipo de operación según el RadioButtom seleccionado.
 # Devuelve "-a" para cuando se selecciona para todos los dispositivos
 # Devuelve "-d" para cuando se selecciona para un grupo de dispositivos
@@ -29,6 +29,46 @@ def getCheckValuesDevices(variables, ids, operacion):
 
     return dispositivos
 
+
+
+def comprobarIP(ip):
+    exp = "^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$"
+    if(re.search(exp, str(ip))):
+        return True
+
+    elif(ip == ""):
+        return False
+    else:
+        mensajeError()
+        return False
+
+
+
+def comprobarMascara(mask):
+    exp = "^([0-9]{1,2})$"
+    if (re.search(exp, mask)):
+        return True
+    else:
+        return False
+
+
+def mensajeError():
+    from tkinter import messagebox
+    messagebox.showerror(message="Error en el formulario enviado", title="Error de formulario")
+
+
+def getIP(lista_ips):
+    ips = []
+    for ip in lista_ips:
+        ips.append(ip.get())
+
+    return ips
+def getMask(mascaras):
+    masks = []
+    for mask in mascaras:
+        masks.append(mask.get())
+
+    return masks
 
 '''
 # Función para obtener los valores de los checks y en función de ellos asignar un ID de la clase Dispositivo ("SW", "WR"...)

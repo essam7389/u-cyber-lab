@@ -1,8 +1,6 @@
 import json
 import re
 
-
-
 exp = "^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$";
 def existKey(lista, key):
     for x in lista:
@@ -26,26 +24,27 @@ def getHosts():
 
 
 def getClientHosts():
-    with open('\\Diccionarios\\host.json', 'r') as f:  # Se realiza la lectura del fichero JSON
+    with open(ruta_absoluta+'host.json', 'r') as f:  # Se realiza la lectura del fichero JSON
         diccionario_hosts = json.load(f)  # Se guardan los datos del fichero JSON en la variable direcciones_dict que nos permitirá acceder a los diversos campos del JSON
 
     hosts = diccionario_hosts.fromkeys(diccionario_hosts.keys())
     values = []
-    for host in diccionario_hosts:
-        if (host.get("tipo") == "Cliente" and host.get("team") == "BT"):
+    for host in diccionario_hosts.get("hosts"):
+        if(host.get("tipo") == "Cliente" and host.get("team") == "BT"):
             values.append({'name': host.get("name"), 'id': host.get("id"), 'team': host.get("team"), 'tipo': host.get("tipo"), 'SO':host.get("SO"),
                            'description': host.get("description"), 'nics': host.get("nics")['data']})
     hosts['hosts'] = values
+    print(hosts)
     return (hosts)
 
 def getServerHosts():
-    with open('\\Diccionarios\\host.json', 'r') as f:  # Se realiza la lectura del fichero JSON
+    with open(ruta_absoluta+'host.json', 'r') as f:  # Se realiza la lectura del fichero JSON
         diccionario_hosts = json.load(
             f)  # Se guardan los datos del fichero JSON en la variable direcciones_dict que nos permitirá acceder a los diversos campos del JSON
 
     hosts = diccionario_hosts.fromkeys(diccionario_hosts.keys())
     values = []
-    for host in diccionario_hosts:
+    for host in diccionario_hosts.get("hosts"):
         if (host.get("tipo") == "Servidor" and host.get("team") == "BT"):
             values.append({'username': host.get("username"), 'password': host.get("password"), 'port': host.get("port"),'name': host.get("name"), 'id': host.get("id"),
                            'team': host.get("team"), 'tipo': host.get("tipo"), 'SO':host.get("SO"),
@@ -54,13 +53,13 @@ def getServerHosts():
     return (hosts)
 
 def getAttackHosts():
-    with open('\\Diccionarios\\host.json', 'r') as f:  # Se realiza la lectura del fichero JSON
+    with open(ruta_absoluta+'host.json', 'r') as f:  # Se realiza la lectura del fichero JSON
         diccionario_hosts = json.load(
             f)  # Se guardan los datos del fichero JSON en la variable direcciones_dict que nos permitirá acceder a los diversos campos del JSON
 
     hosts = diccionario_hosts.fromkeys(diccionario_hosts.keys())
     values = []
-    for host in diccionario_hosts:
+    for host in diccionario_hosts.get("hosts"):
         if (host.get("team") == "RT"):
             values.append({'name': host.get("name"), 'id': host.get("id"), 'team': host.get("team"),
                            'tipo': host.get("tipo"),

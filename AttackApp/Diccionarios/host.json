@@ -7,7 +7,7 @@
        "description":"Raspberry Pi correspondondiente al Router 1, ",
        "id":"RP_R1_1",
         "team": "RT",
-        "tipo": "Cliente",
+        "tipo": "Atacante",
         "SO": "Kali Linux",
        "nics":{"management":
                   {"IP":"192.168.2.11","type":"Wifi","nicname":"w0","id":"RP1_M1"},
@@ -128,7 +128,6 @@
        "id":"RP_R3_3",
        "team": "BT",
       "tipo": "Servidor",
-        "tipo": "Cliente",
       "SO": "Ubuntu Mate",
        "nics":{"management":
                   {"IP":"192.168.2.19","type":"Wifi","nicname":"w0","id":"RP9_M9"},
