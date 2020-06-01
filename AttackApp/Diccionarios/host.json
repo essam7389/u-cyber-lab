@@ -15,8 +15,8 @@
                   {"IP":"33.1.2.4","type":"ethernet","nicname":"eth2","id":"RP1_D2"}
            }
       },
-    {"username": "ucase",
-      "password": "ucase",
+    {"username": "root",
+      "password": "toor",
       "port": "22",
       "name":"Raspberry Pi 2",
        "description":"Raspberry Pi correspondondiente al Router 1, ",
@@ -25,9 +25,9 @@
       "tipo": "Cliente",
       "SO": "Ubuntu Mate",
        "nics":{"management":
-                  {"IP":"192.168.2.12","type":"Wifi","nicname":"w0","id":"RP1_M2"},
+                  {"IP":"192.168.2.11","type":"Wifi","nicname":"w0","id":"RP1_M2"},
                "data":
-                  {"IP":"33.1.1.3","type":"ethernet","nicname":"eth3","id":"RP2_D3"}
+                  {"IP":"33.1.2.4","type":"ethernet","nicname":"eth3","id":"RP2_D3"}
            }
       },
     { "username": "ucase",

@@ -3,7 +3,7 @@ from sshConnection import connection
 
 def monitorizar(hosts_emisor, hosts_receptor):
     print("He entrado en monitorizar")
-    for emisor in hosts_emisor:
+    for emisor in hosts_emisor.get("devices"):
         username = emisor.get("username")
         password = emisor.get('password')
         port = int(emisor.get('port'))
@@ -13,7 +13,7 @@ def monitorizar(hosts_emisor, hosts_receptor):
         ssh = connection(ip_emisor, port, username, password)
         print("Monitoraizando tráfico...")
         stdin, stdout, stderr = ssh.exec_command('/ip traffic-flow set enabled=yes')
-        for target in hosts_receptor:
+        for target in hosts_receptor.get("devices"):
             ip_receptor = target.get("nics")['management']['IP']
             stdin, stdout, stderr = ssh.exec_command('/ip traffic-flow target add dst-address=' + ip_receptor + " port = 2055 version=9")
 

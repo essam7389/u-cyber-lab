@@ -2,6 +2,11 @@ from GUIControllerAttack import controller
 from GUImethods import *
 
 def scan(raiz):
+    '''
+    :param raiz: Recibe una dirección a la interfáz gráfica principal de la aplicación
+    :return: No devuelve nada
+    '''
+
     stateWindow = Toplevel(raiz)
     stateWindow.title("Escanear Dispositivos")
     stateWindow.wm_resizable(0, 0)
@@ -46,11 +51,11 @@ def scan(raiz):
     diccionario_atacantes = getAttackHosts()
 
     # Se crea una lista compuesta de texto y una scrollbar(barra) vertical para los clientes
-    lista_clientes = Frame(stateWindow)
-    scrollbar_clientes = Scrollbar(lista_clientes)
-    scrollbar_clientes.pack(side=RIGHT, fill=Y, pady=20)
+    lista_atacantes = Frame(stateWindow)
+    scrollbar_atacantes = Scrollbar(lista_atacantes)
+    scrollbar_atacantes.pack(side=RIGHT, fill=Y, pady=20)
 
-    checklistClientes = Text(lista_clientes, height=20, width=15)
+    checklistAtacantes = Text(lista_atacantes, height=20, width=15)
 
 
     # Se generan los botones Check en base a la cantidad de dispositivos que haya en nuestro diccionario.
@@ -71,23 +76,23 @@ def scan(raiz):
         v += 1
         ids_atacantes.append(atacante_check.get("id"))
         checkBtns.append(
-            Checkbutton(checklistClientes, text=atacante_check.get("name"), variable=variables_atacantes[c], onvalue=i, state=DISABLED))
-        checklistClientes.window_create("end", window=checkBtns[c])
-        checklistClientes.insert("end", "\n")
+            Checkbutton(checklistAtacantes, text=atacante_check.get("name"), variable=variables_atacantes[c], onvalue=i, state=DISABLED))
+        checklistAtacantes.window_create("end", window=checkBtns[c])
+        checklistAtacantes.insert("end", "\n")
         #print(variables_clientes[c].get())
         i += 1
         c += 1
 
-    checklistClientes.pack(pady=20)
-    checklistClientes.config(yscrollcommand=scrollbar_clientes.set)
-    scrollbar_clientes.config(command=checklistClientes.yview)
+    checklistAtacantes.pack(pady=20)
+    checklistAtacantes.config(yscrollcommand=scrollbar_atacantes.set)
+    scrollbar_atacantes.config(command=checklistAtacantes.yview)
 
     # Desactiva el widget para que los usuarios no puedan introducir texto
-    checklistClientes.configure(state="disabled")
+    checklistAtacantes.configure(state="disabled")
 
     print("HE TERMINADO EL BUCLE")
 
-    # Botón de confirmación que pasa a la función controller 3 argumentos (la acción (Consultar), la operación deseada y los valores de los checks en ID
+    # Botón de confirmación que pasa a la función controller 3 argumentos (la acción (Scan), la operación deseada y los valores de los checks en ID
     btnConfirmation = Button(stateWindow, text="Confirmar acción", command=lambda: [
         controller(accion, getOpValues(op.get()), hosts_origen=getCheckValuesDevices(variables_atacantes, ids_atacantes, op.get()), hosts_destino=getIP(Redes), mask=getMask(Mascaras),
                   GUI= raiz), stateWindow.destroy()])
@@ -98,4 +103,4 @@ def scan(raiz):
 
     btnConfirmation.pack()
     btnConfirmation.pack(pady=20)
-    lista_clientes.pack()
+    lista_atacantes.pack()

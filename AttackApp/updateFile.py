@@ -1,22 +1,41 @@
+from tkinter import messagebox
+
 from scp import SCPClient
+from GUImethods import mensajeError
 
-def updateFile(ssh, ruta_origen, sistema = "", ruta_destino = "", nombre = "Script"):
+def updateFile(ssh, ruta_origen, sistema = "", ruta_destino = ""):
+    '''
+    :param ssh: Recibe una conexión ssh activa
+    :param ruta_origen: Se recibe la ruta de origen del archivo a subir
+    :param sistema: Se recibe el sistema operativo al cuál se va a subir el archivo
+    :param ruta_destino: Se recibe la ruta de destino del archivo a subir
+    :return: No devuelve nada
+    '''
 
-    scp = SCPClient(ssh.get_transport())
-    ruta_defecto_kali = "/root/Documents/scripts/"
-    ruta_defecto_ubuntu = "/home/ucase/Documentos/scripts/"
-    print("sistema = " + sistema)
-    print("ruta_destino = " + ruta_destino)
-    if(sistema == "Kali Linux" and ruta_destino == ""): #Para Kali Linux
-        print("He entrado en ruta_destino == """)
-        ruta_destino = ruta_defecto_kali;
-    elif(sistema == "Ubuntu Mate" and ruta_destino == ""): #Para ubuntu mate
-        ruta_destino = ruta_defecto_ubuntu;
+    try:
 
-    #ruta_destino += nombre
-    print("ruta origen = " + ruta_origen)
-    print("ruta destino = " + ruta_destino)
-    scp.put(ruta_origen, remote_path=ruta_destino);
+        scp = SCPClient(ssh.get_transport())
+        ruta_defecto_kali = "/root/Documents/scripts/"
+        ruta_defecto_ubuntu = "/home/ucase/Documentos/scripts/"
+        print("sistema = " + sistema)
+        print("ruta_destino = " + ruta_destino)
+        if(sistema == "Kali Linux" and ruta_destino == ""): #Para Kali Linux
+            print("He entrado en ruta_destino == """)
+            ruta_destino = ruta_defecto_kali;
+        elif(sistema == "Ubuntu Mate" and ruta_destino == ""): #Para ubuntu mate
+            ruta_destino = ruta_defecto_ubuntu;
+
+        #ruta_destino += nombre
+        print("ruta origen = " + ruta_origen)
+        print("ruta destino = " + ruta_destino)
+        scp.put(ruta_origen, remote_path=ruta_destino);
+        scp.close()
+    except Exception:
+        msgerror = "Ha ocurrido un error al intentar cargar el archivo en el dispositivo"
+        titulo = "Error al conectar"
+        print(msgerror)
+        mensajeError(msgerror, titulo)
+        exit()
 
 
 

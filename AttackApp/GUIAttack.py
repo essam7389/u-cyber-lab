@@ -22,18 +22,17 @@ foto = PhotoImage(file="gui-icon-attack2.png")
 Label(raiz, image=foto).pack()
 
 frame = Frame(raiz) #Creamos un frame
-frame.pack(fill="both" ,expand="true", pady=15)    #Empaquetamos el frame dentro de la ventana
+frame.pack(fill="both", expand="true", pady=15)    #Empaquetamos el frame dentro de la ventana
 frame.config(width="600", height="300", cursor="pirate")
 #A partir de aquí vamos creando los botones correspondientes a las diferentes opciones:
 
 btnScan = Button(frame, text="Escanear Red", justify=CENTER, command=lambda: scan(raiz))
 btnTraffic = Button(frame, text="Generar Tráfico", justify=CENTER, command=lambda: generateTraffic(raiz))
 btnSshAttack = Button(frame, text="SSH Attack", justify=CENTER, command=lambda: sshAttack(raiz))
-
-
 btnServer = Button(frame, text="Activar Servidores", justify=CENTER, command=lambda: servers(raiz))
 btnMonitorizar = Button(frame, text="Monitorizar", justify=CENTER, command=lambda: monitorizar(raiz))
 
+#Se generan los botones en la interfáz de manera gráfica
 btnScan.pack(fill="x", padx=10, pady=10)
 btnTraffic.pack(fill="x", padx=10, pady=10)
 btnSshAttack.pack(fill="x",  padx=10, pady=10)
@@ -41,3 +40,16 @@ btnServer.pack(fill="x",  padx=10, pady=10)
 btnMonitorizar.pack(fill="x",  padx=10, pady=10)
 
 raiz.mainloop()
+
+
+
+#1. Para solucionar el problema de la barra de carga tenemos que crear una función intermedia entre la función controller
+#y la interfáz gráfica, esto es debido a qué así terminamos la ejecución de dicha ventana hija de la aplicación y podemos
+#abrir otras ventanas y envíar los datos a la función controller
+
+# 2. Para el caso de la scrollbar en la ventana para añadir datos a los diccionarios debemos fijarnos en la lista de checksButtons
+#que tenemos en cualquiera de las ventanas de la GUI y cambiar los checksButtons por Entrys y Labels, además ampliando la superficie.
+# Una vez hecho esto, tanto en la opción de editar como de eliminar podemos pedir al usuario el nic del dispositivo de tal forma
+#que una vez el usuario pulse fuera del Entry se evalue dicho nic con los que hay en los diccionarios, si lo encuentra devuelve
+#True habilitando cada uno de los campos a rellenar del dispositivo o en caso contrario devolviendo false y no habilitándolos.
+#Para eliminar un dispositivo simplemente se comprobaría si el nic es true y se eliminaría.

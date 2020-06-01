@@ -1,16 +1,16 @@
 from tkinter import *
 
 
-def imprimirScanGUI(raiz, stdout):
+def imprimirSSHAttackGUI(raiz, stdout):
     '''
     :param raiz: Recibe una dirección a la interfáz gráfica principal de la aplicación
     :param stdout: Se recibe la salida del ataque SSH
-    :return: No devuelve nada
+    :return:
     '''
 
-    # Se crea la ventana donde se imprimirá la información de salida del ataque ssh
+    #Se crea la ventana donde se imprimirá la información de salida del ataque ssh
     displayWindow = Toplevel(raiz)
-    displayWindow.title("Display Scan hosts")
+    displayWindow.title("Display SSHAttack hosts")
     displayWindow.wm_resizable(0, 0)
     displayWindow.geometry("400x320")
 
@@ -20,7 +20,7 @@ def imprimirScanGUI(raiz, stdout):
     scrollbar.pack(side=RIGHT, fill=Y)
     text.pack(side=LEFT, fill=Y)
 
-    # Se recorre la salida estandar imprimiendo todo lo que contiene
+    #Se recorre la salida estandar imprimiendo todo lo que contiene
     for line in stdout:
         salida = line.strip('\n')
         print(salida)

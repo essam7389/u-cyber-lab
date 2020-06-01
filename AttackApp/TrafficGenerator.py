@@ -15,11 +15,11 @@ def generarTrafico(clientes_hosts, servidores_hosts, tiempo = 0, ruta_diccionari
 
     #Ruta por defecto donde se guardará el diccionario y el archivo trafficFlow.py
     ruta_diccionario_origen = "Diccionarios\servidores_hosts.json"
-    ruta_diccionario_destino = "/root/Documents/Diccionarios/"
+    ruta_diccionario_destino = "/root/Documents/Diccionarios/servidores_hosts.json"
 
    # if(ruta_trafficFlow == ""):
     ruta_trafficFlow_origen = "trafficFlow.py"
-    ruta_trafficFlow_destino = "/root/Documents/scripts/"
+    ruta_trafficFlow_destino = "/root/Documents/scripts/trafficFlow.py"
 
     print("Estoy antes del bucle  for")
     salida = ""
@@ -35,8 +35,8 @@ def generarTrafico(clientes_hosts, servidores_hosts, tiempo = 0, ruta_diccionari
         ssh = connection(ip, port, username, password)
         # Cargamos el diccionario y el fichero trafficFlow dentro del host correspondiente
         # Revisar, se le está pasando una ruta y no cargan los ficheros debido a que no coge la que está por defecto en updatefile
-        updateFile(ssh, ruta_diccionario_origen, sistema, ruta_destino=ruta_diccionario_destino, nombre="servidores_hosts.json")
-        updateFile(ssh, ruta_trafficFlow_origen, sistema, ruta_destino=ruta_trafficFlow_destino, nombre="trafficFlow.py")
+        updateFile(ssh, ruta_diccionario_origen, sistema, ruta_destino=ruta_diccionario_destino)
+        updateFile(ssh, ruta_trafficFlow_origen, sistema, ruta_destino=ruta_trafficFlow_destino)
         print("He terminado de cargar los archivos")
         #Eliminamos el archivo enviado a la Raspberry Pi cliente para que en la siguiente llamada no se sobreescriba el archivo
         #añadiendose más cantidad de dispositivos hosts.

@@ -1,16 +1,21 @@
 # Script para recuperación de la configuración por defecto de los Routers y Switches Mikrotik
 #Author: Alberto Antonio Perales Montero
 import sys
-
 import paramiko
 from paramiko import AuthenticationException, SSHException, BadHostKeyException
+from tkinter import messagebox
 
 ssh = None
 keyfile_path = 'private_key_file'
 
-
-
 def connection(host, port, username, password):
+    '''
+    :param host: Se recibe el host al cuál se quiere conectar
+    :param port: Se recibe el puerto mediante el cuál se realizará la conexión por ssh
+    :param username: Se recibe el usuario del dispositivo
+    :param password: Se recibe la contraseña correspondiente a dicho usuario
+    :return: Devuelve una conexión ssh si todo va bien, en caso contrario se generará una excepción y se cerrará la conexión
+    '''
     # Create the SSH client.
     try:
         ssh = paramiko.SSHClient()
@@ -25,13 +30,13 @@ def connection(host, port, username, password):
         # Connect to the host.
 
         ssh.connect(host, port, username, password, timeout=4)
-
-
         print("Conexión realizada")
 
         #tm = tiempo.tiempo()  # Calculamos el tiempo pasado en segundos desde el año 1970
     except AuthenticationException:
-        print("Authentication failed, please verify your credentials: %s")
+        print("La autenticación ha fallado, por favor revisa el usuario y la contraseña: %s")
+        messagebox.showerror(message="La autenticación ha fallado, por favor revisa el usuario y la contraseña",
+                             title="Error al autenticar")
         sys.exit(1)
     except SSHException as sshException:
         print("Unable to establish SSH connection: %s" % sshException)
@@ -41,6 +46,7 @@ def connection(host, port, username, password):
         sys.exit(1)
     except Exception:
         print("Ha ocurrido un error al intentar conectar con el dispositivo")
+        messagebox.showerror(message="Ha ocurrido un error al intentar conectar con el dispositivo", title="Error al conectar")
         exit()
 
     return (ssh)

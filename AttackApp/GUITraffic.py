@@ -3,9 +3,9 @@ from GUImethods import *
 
 def generateTraffic(raiz):
     stateWindow = Toplevel(raiz)
-    stateWindow.title("Escanear Dispositivos")
+    stateWindow.title("Activar/Desactivar Tráfico")
     stateWindow.wm_resizable(0, 0)
-    stateWindow.geometry("400x350")
+    stateWindow.geometry("350x350")
 
     op = IntVar()
     # Texto previo a las opciones básicas
@@ -13,97 +13,104 @@ def generateTraffic(raiz):
 
     # Opciones básicas, se debe elegir una u otra pero no ambas
 
-    consultar_all = Radiobutton(stateWindow, text="Escanear todos los hosts", variable=op, value=1,
-                                command=lambda: disabled(checkBtns))
-    consultar_single = Radiobutton(stateWindow, text="Escanear una serie de hosts", variable=op, value=2,
-                                   command=lambda: enabled(checkBtns))
+    consultar_all = Radiobutton(stateWindow, text="Activar tráfico desde todos los hosts a todos los hosts", variable=op, value=1,
+                                command=lambda: [disabled(checkBtnsCliente), disabled(checkBtnsServidor)])
+    consultar_single = Radiobutton(stateWindow, text="Activar tráfico desde hosts concretos a hosts concretos", variable=op, value=2,
+                                   command=lambda: [enabled(checkBtnsCliente), enabled(checkBtnsServidor)])
 
     consultar_all.pack()
     consultar_single.pack()
     # Acción correspondiente a la opción escogida en el menú principal que se le pasará al controlador
-    accion = "Scan"
+    accion = "TrafficFlow"
 
-    # Obtenemos el JSON(diccionario) con toda la información referente a nuestros dispositivos.
+    # Obtenemos el JSON(diccionario) con toda la información referente a nuestros servidores.
+    diccionario = getServerHosts()
     diccionario_clientes = getClientHosts()
-    diccionario_servidores = getServerHosts()
 
-    # Se crea una lista compuesta de texto y una scrollbar(barra) vertical para los clientes
-    lista_clientes = Frame(stateWindow)
-    scrollbar_clientes = Scrollbar(lista_clientes)
-    scrollbar_clientes.pack(side=RIGHT, fill=Y, pady=20)
+    # Se crea una lista compuesta de texto y una scrollbar(barra) vertical
+    lista_cliente = Frame(stateWindow)
+    scrollbar_cliente = Scrollbar(lista_cliente)
+    scrollbar_cliente.pack(side=RIGHT, fill=Y, pady=20)
+    checklistCliente = Text(lista_cliente, height=20, width=15)
 
-    checklistClientes = Text(lista_clientes, height=20, width=15)
 
-    # Se crea una lista compuesta de texto y una scrollbar(barra) vertical para los servidores
+    #Se crea una lista para el servidor compuesta de texto y una scrollbar(barra) vertical
     lista_servidor = Frame(stateWindow)
     scrollbar_servidor = Scrollbar(lista_servidor)
     scrollbar_servidor.pack(side=RIGHT, fill=Y, pady=20)
-
-    checklistservidor = Text(lista_servidor, height=20, width=15)
+    checklistServidor = Text(lista_servidor, height=20, width=15)
 
     # Se generan los botones Check en base a la cantidad de dispositivos que haya en nuestro diccionario.
-    variables_clientes = []
-    variables_servidores = []
-    # v = 0
+    variables_servidor = []
+    variables_cliente = []
+    v = 0
     i = 1
     c = 0
-    s = 0
-    checkBtns = []
-    ids_clientes = []
-    ids_servidores = []
+    checkBtnsCliente = []
+    checkBtnsServidor = []
 
-    # Se realiza un bucle que recorrerá todos y cada uno de los dispositivos registrados en el diccionario
-    # generándose los checkbuttons para cada uno de ellos
-    for clientes_check in diccionario_clientes.get("hosts"):
-        variables_clientes.append(clientes_check.get("id"))
-        variables_clientes.append(IntVar())
-        # v += 1
-        ids_clientes.append(clientes_check.get("id"))
-        checkBtns.append(
-            Checkbutton(checklistClientes, text=clientes_check.get("name"), variable=variables_clientes[c], onvalue=i,
+    ids_servidor = []
+    ids_cliente = []
+    # Bucle que obtiene los hosts de tipo servidor
+    for cliente in diccionario_clientes.get("hosts"):
+        variables_cliente.append(cliente.get("id"))
+        variables_cliente[v] = IntVar()
+        v += 1
+        ids_cliente.append(cliente.get("id"))
+        checkBtnsCliente.append(
+            Checkbutton(checklistCliente, text=cliente.get("name"), variable=variables_cliente[c], onvalue=i,
                         state=DISABLED))
-        checklistClientes.window_create("end", window=checkBtns[c])
-        checklistClientes.insert("end", "\n")
-        print(variables_clientes[c].get())
+        checklistCliente.window_create("end", window=checkBtnsCliente[c])
+        checklistCliente.insert("end", "\n")
+        print(variables_cliente[c].get())
         i += 1
         c += 1
 
-    i = 0
 
-    for servidores_check in diccionario_servidores.get("hosts"):
-        variables_servidores.append(servidores_check.get("id"))
-        variables_servidores.append(IntVar())
-
-        ids_servidores.append(servidores_check.get("id"))
-        checkBtns.append(
-            Checkbutton(checklistservidor, text=servidores_check.get("name"), variable=variables_servidores[s],
-                        onvalue=i, state=DISABLED))
-        checklistservidor.window_create("end", window=checkBtns[s])
-        checklistservidor.insert("end", "\n")
-        print(variables_servidores[s].get())
+    v = 0
+    i = 1
+    c = 0
+    # Bucle que obtiene los hosts de tipo servidor
+    for servidor in diccionario.get("hosts"):
+        variables_servidor.append(servidor.get("id"))
+        variables_servidor[v] = IntVar()
+        v += 1
+        ids_servidor.append(servidor.get("id"))
+        checkBtnsServidor.append(
+            Checkbutton(checklistServidor, text=servidor.get("name"), variable=variables_servidor[c], onvalue=i,
+                        state=DISABLED))
+        checklistServidor.window_create("end", window=checkBtnsServidor[c])
+        checklistServidor.insert("end", "\n")
+        print(variables_servidor[c].get())
         i += 1
-        s += 1
+        c += 1
 
-    checklistClientes.pack(pady=20)
-    checklistClientes.config(yscrollcommand=scrollbar_clientes.set)
-    scrollbar_clientes.config(command=checklistClientes.yview)
+    checklistCliente.pack(pady=20)
+    checklistCliente.config(yscrollcommand=scrollbar_cliente.set)
+    scrollbar_cliente.config(command=checklistCliente.yview)
 
-    checklistservidor.pack(pady=20)
-    checklistservidor.config(yscrollcommand=scrollbar_servidor.set)
-    scrollbar_servidor.config(command=checklistservidor.yview)
+    checklistServidor.pack(pady=20)
+    checklistServidor.config(yscrollcommand=scrollbar_servidor.set)
+    scrollbar_servidor.config(command=checklistServidor.yview)
 
-    # Desactiva el widget para que los usuarios no puedan introducir texto
-    checklistClientes.configure(state="disabled")
-    checklistservidor.configure(state="disabled")
+    # disable the widget so users can't insert text into it
+    checklistCliente.configure(state="disabled")
+    checklistServidor.configure(state="disabled")
 
-    print("HE TERMINADO EL BUCLE")
+    # Botón de confirmación que pasa a la función controller 3 argumentos (la acción (Servidor), la operación deseada y los valores de los checks en ID
+    btnActivar = Button(stateWindow, text="Activar Tráfico", command=lambda: [
+        controller(accion, getOpValues(op.get()), hosts_origen=getCheckValuesDevices(variables_cliente, ids_cliente, op.get()),
+                   hosts_destino=getCheckValuesDevices(variables_servidor, ids_servidor, op.get()),
+                   GUI=raiz), stateWindow.destroy()])
 
-    # Botón de confirmación que pasa a la función controller 3 argumentos (la acción (Consultar), la operación deseada y los valores de los checks en ID
-    btnConfirmation = Button(stateWindow, text="Confirmar acción", command=lambda: [
-        controller(accion, getOpValues(op.get()), getCheckValuesDevices(variables_clientes, ids_clientes, op.get()),
-                   getCheckValuesDevices(variables_servidores, ids_servidores, op.get()),
-                   raiz), stateWindow.destroy()])
-    btnConfirmation.pack()
-    btnConfirmation.pack(pady=20)
-    lista_clientes.pack()
-    lista_servidor.pack()
+    # Botón de confirmación que pasa a la función controller 3 argumentos (la acción (Servidor), la operación deseada y los valores de los checks en ID
+    # y además una suboperacion que en este caso corresponde a la desactivación(--s)
+    btnDesactivar = Button(stateWindow, text="Desactivar Tráfico", command=lambda: [
+        controller(accion, getOpValues(op.get()), hosts_origen= getCheckValuesDevices(variables_cliente, ids_cliente, op.get()),
+                   hosts_destino=getCheckValuesDevices(variables_servidor, ids_servidor, op.get()), suboperacion="--s",
+                   GUI=raiz), stateWindow.destroy()])
+
+    btnActivar.pack(pady=10, padx=10, side=BOTTOM)
+    btnDesactivar.pack(pady=10, padx=10, side=BOTTOM)
+    lista_cliente.pack(side=LEFT, padx=20)
+    lista_servidor.pack(side=LEFT)

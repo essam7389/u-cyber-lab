@@ -2,10 +2,14 @@ from GUIControllerAttack import controller
 from GUImethods import *
 
 def servers(raiz):
+    '''
+    :param raiz:
+    :return:
+    '''
     stateWindow = Toplevel(raiz)
     stateWindow.title("Activar Servidores")
     stateWindow.wm_resizable(0, 0)
-    stateWindow.geometry("400x250")
+    stateWindow.geometry("400x300")
 
     op = IntVar()
     # Texto previo a las opciones básicas
@@ -72,6 +76,6 @@ def servers(raiz):
         controller(accion, getOpValues(op.get()), hosts_destino=getCheckValuesDevices(variables_servidor, ids_servidor, op.get()), suboperacion="--s",
                    GUI=raiz), stateWindow.destroy()])
 
-    btnActivar.pack(pady=20)
-    btnDesactivar.pack(pady=20, side=LEFT)
-    lista.pack(side=BOTTOM)
+    btnActivar.pack(pady=10, padx= 10, side=BOTTOM)
+    btnDesactivar.pack(pady=10, padx=10,  side=BOTTOM)
+    lista.pack(side=TOP)
