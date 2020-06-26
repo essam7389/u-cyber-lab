@@ -1,5 +1,7 @@
 from tkinter import *
-from MikrotikApp.JSONmethods import *
+from tkinter import messagebox
+
+from JSONmethods import *
 
 # Función que devuelve el tipo de operación según el RadioButtom seleccionado.
 # Devuelve "-a" para cuando se selecciona para todos los dispositivos
@@ -16,7 +18,9 @@ def getOpValues(op):
 # Función para obtener los valores de los checks y en función de ellos asignar un ID de la clase Dispositivo ("SW", "WR"...)
 def getCheckValuesDevices(variables, ids, operacion):
     dispositivos = []
-    print(variables)
+    print("variables = ",variables)
+    print("ids = ", ids)
+    print("operacion = ", operacion)
     if(operacion == 2):
         id = iter(ids)
 
@@ -26,8 +30,9 @@ def getCheckValuesDevices(variables, ids, operacion):
                 dispositivos.append(nic)
             else:
                 dispositivos.append("cero")
-
+    print("dispositivos = ", dispositivos)
     return dispositivos
+
 
 
 '''
@@ -46,6 +51,15 @@ def getCheckValuesHosts(variables, ids, operacion):
 
     return hosts
 '''
+
+def mensajePregunta(mensaje, titulo):
+    '''
+       :param mensaje: Se recibe el mensaje de confirmación que se mostrará en la ventana de advertencia
+       :param titulo: Se recibe el título a mostrar en la ventana de advertencia de la aplicación
+       :return: Devuelve true en caso de que se elija Sí y false en caso contrario.
+       '''
+    return messagebox.askquestion(message=mensaje, title=titulo)
+
 
 # Función que activa los checks una vez se active la opción de Consultar un dispositivo concreto
 def enabled(checkBtns):

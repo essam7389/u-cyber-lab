@@ -1,12 +1,12 @@
-from MikrotikApp.Reset import reset
-from MikrotikApp.estado import *
-from MikrotikApp.reboot import reboot
-from MikrotikApp.shutdown import apagar
-from MikrotikApp.sshConnection import connection
-from MikrotikApp.GUIconsultaDisplay import imprimirEstadoGUI
-from MikrotikApp.JSONmethods import *
-from MikrotikApp.shutdownHost import *
-from MikrotikApp.rebootHost import *
+from Reset import reset
+from estado import *
+from reboot import reboot
+from shutdown import apagar
+from sshConnection import connection
+from GUIconsultaDisplay import imprimirEstadoGUI
+from JSONmethods import *
+from shutdownHost import *
+from rebootHost import *
 
 def controller(accion, operacion, dispositivos = [], GUI=None, rutas = []):
     '''
@@ -21,7 +21,8 @@ def controller(accion, operacion, dispositivos = [], GUI=None, rutas = []):
     print("dispositivos = " .format(dispositivos))
     print(dispositivos)
     print("operación = ".format( operacion))
-    print("dispositivos = " .format(dispositivos))
+    print(operacion)
+
     if(operacion == "-a"):
         diccionario = getDevices()
         diccionario_hosts = getHosts()

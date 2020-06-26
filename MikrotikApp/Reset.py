@@ -1,10 +1,11 @@
 from scp import SCPClient
-from MikrotikApp.tiempo import *
+
+from tiempo import *
 
 
 def reset(ssh, backup):
     scp = SCPClient(ssh.get_transport())
-    scp.put(backup,  remote_path='BACKUP');
+    scp.put(backup,  remote_path='backup');
 
     # Send the command (non-blocking)
 
@@ -20,8 +21,7 @@ def reset(ssh, backup):
     print(stdout)
     print(time_string)
 
-    stdin, stdout, stderr = ssh.exec_command('/system script add name="reset" source="/system backup load name = BACKUP"')
+    stdin, stdout, stderr = ssh.exec_command('/system script add name="reset" source="/system reset-configuration keep-users=yes no-defaults=yes run-after-reset=backup.rsc"')
     stdin, stdout, stderr = ssh.exec_command('/system scheduler add name=reseteo start-time=' + time_string + ' on-event=reset')
 
-
-
+    ssh.close()

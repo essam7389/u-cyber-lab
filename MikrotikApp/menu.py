@@ -4,8 +4,8 @@
 import argparse
 import os
 
-from MikrotikApp.GUIController import controller
-from MikrotikApp.GUImethods import *
+from GUIController import controller
+from GUImethods import *
 
 print("Por favor seleccione una opción: \n")
 print("1. Apagar Dispositivo \n"

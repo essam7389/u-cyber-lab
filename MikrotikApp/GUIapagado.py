@@ -1,5 +1,5 @@
-from MikrotikApp.GUIController import controller
-from MikrotikApp.GUImethods import *
+from GUIController import controller
+from GUImethods import *
 
 
 def apagado(raiz):

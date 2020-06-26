@@ -8,6 +8,46 @@ def existKey(lista, key):
 
     return False
 
+def addDevices(username, password, port, nombre, description, id, ip_management, type_management, nicname_management, id_management,
+        ip_data, type_data, nicname_data, id_data):
+    devices = {
+        "username": username,
+        "password": password,
+        "port": port,
+        "name": nombre,
+        "description": description,
+        "id": id,
+        "nics": {"management":
+             {"IP": ip_management, "type": type_management, "nicname": nicname_management, "id": id_management},
+            "data":
+             {"IP": ip_data, "type": type_data, "nicname": nicname_data, "id": id_data}
+         }
+    }
+
+    with open('dispositivos.json', 'w') as file:
+        json.dump(devices, file)
+
+
+def addHosts(username, password, port, nombre, description, id, ip_management, type_management, nicname_management, id_management,
+        ip_data, type_data, nicname_data, id_data, team, tipo, so):
+    hosts = {
+        "username": username,
+        "password": password,
+        "port": port,
+        "name": nombre,
+        "description": description,
+        "id": id,
+        "nics": {"management":
+                     {"IP": ip_management, "type": type_management, "nicname": nicname_management, "id": id_management},
+                 "data":
+                     {"IP": ip_data, "type": type_data, "nicname": nicname_data, "id": id_data}
+                 },
+        "team":team,
+        "tipo": tipo,
+        "so": so
+    }
+    with open('hosts.json', 'w') as file:
+        json.dump(hosts, file)
 
 def getDevices():
     with open('Diccionarios\dispositivos.json', 'r') as f:  # Se realiza la lectura del fichero JSON

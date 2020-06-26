@@ -1,5 +1,5 @@
-from MikrotikApp.GUIController import controller
-from MikrotikApp.GUImethods import *
+from GUIController import controller
+from GUImethods import *
 from tkinter.filedialog import askopenfile
 
 def reseteo(raiz):
@@ -62,16 +62,23 @@ def reseteo(raiz):
     checklist.configure(state="disabled")
 
     #Obtenemos un nº concreto de 'files'(archivos de backups) en base a la cantidad de dispositivos que queramos resetear.
-    def getFiles():
+    def getFiles(variables_devices, op, ids_devices):
         x = 0
         numDevices = i
         files = []
-        if(getOpValues() == 1):
+        lista = []
+        if(getOpValues(op) == 1):
             for x in numDevices:
                 file = open_file()
                 files.append(file)
         else:
-            for x in getCheckValuesDevices():
+            print("HE ENTRADO EN EL ELSE")
+            lista = getCheckValuesDevices(variables_devices, ids_devices, op)
+            print(lista)
+
+            print(ids_devices)
+            print(variables_devices)
+            for x in lista:
                 if(x != "cero"):
                     file = open_file()
                     files.append(file)
@@ -79,9 +86,10 @@ def reseteo(raiz):
 
     #Se abre una ventana donde el usuario selecciona el archivo(backup) que desea cargar y se guarda en la variable 'file'
     def open_file():
-        file = askopenfile(mode='r', filetypes=[('Python Files', '*.backup')])
+        file = askopenfile(mode='r', filetypes=[('Python Files', '*')])
         return file
+    print("op.get() = " , op.get())
 
-    btnConfirmation = Button(resetWindow, text="Confirmar acción", command=lambda: [controller(accion, getOpValues(op.get()), getCheckValuesDevices(variables_devices, ids_devices), raiz, getFiles()), resetWindow.destroy()])
+    btnConfirmation = Button(resetWindow, text="Confirmar acción", command=lambda: [controller(accion, getOpValues(op.get()), getCheckValuesDevices(variables_devices, ids_devices, op.get()), raiz, rutas=getFiles(variables_devices, op.get(), ids_devices)), resetWindow.destroy()])
     btnConfirmation.pack(pady=20)
     lista.pack()

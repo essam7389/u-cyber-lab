@@ -1,4 +1,4 @@
-from MikrotikApp.tiempo import tiempo
+from tiempo import tiempo
 
 def apagar(ssh):
 
