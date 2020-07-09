@@ -1,5 +1,9 @@
 import time
 def tiempo(ssh):
+    '''
+    :param ssh: Recibe una conexión sshr
+    :return: Devuelve el tiempo en formato horas:minutor:segundos como resultado de la operación
+    '''
     tm = time.time()  # Calculamos el tiempo pasado en segundos desde el año 1970
     stdin, stdout1, stderr = ssh.exec_command('/system clock set time=' + time.strftime('%H:%M:%S'))
     stdin, stdout2, stderr = ssh.exec_command('/system clock set print')

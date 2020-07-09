@@ -1,3 +1,4 @@
+from GUIControllerDiccionario import controllerDiccionario
 from GUImethods import *
 from addDiccinario import *
 
@@ -6,161 +7,114 @@ def addDiccionario(raiz):
     :param raiz: Se recibe la dirección de memoría de la interfáz gráfica de Tkinter
     :return: No se devuelve nada, simplemente se llama a la función 'Controller' definida en 'GUIControllerAttack.py'
     '''
-    
+
     addWindow = Toplevel(raiz)
-    addWindow.title("SSH Attack")
+    addWindow.title("Editar el Diccionario")
     addWindow.wm_resizable(0, 0)
-    addWindow.geometry("400x1000")
+    addWindow.geometry("800x400")
 
     op = IntVar()
     # Texto previo a las opciones básicas
-    Label(addWindow, text="Por favor complete todos los campos para añadir un nuevo dispositivo:").pack(pady=10)
-
+    Label(addWindow, text="Por favor seleccione una opción: ").pack()
     # Opciones básicas, se debe elegir una u otra pero no ambas
 
     scan_all = Radiobutton(addWindow, text="Añadir dispositivo",
                            variable=op, value=1,
-                           command=lambda: disabled(entryBtns))
+                           command=lambda: disabled(entryHosts))
     scan_single = Radiobutton(addWindow, text="Añadir host",
                               variable=op, value=2,
-                              command=lambda: enabled(entryBtns))
+                              command=lambda: enabled(entryHosts))
 
     scan_all.pack()
     scan_single.pack()
 
-    # Se crea una lista compuesta de texto y una scrollbar(barra) vertical para los clientes
-    lista_entrys = Frame(addWindow)
-    scrollbar = Scrollbar(lista_entrys)
-    Entrys = Text(lista_entrys, height=20, width=15)
+    # Acción correspondiente a la opción escogida en el menú principal que se le pasará al controlador
+    accion = "Añadir"
+
+    # Se crea una lista compuesta de texto y una scrollbar(barra) vertical
+    lista = Frame(addWindow)
+    scrollbar = Scrollbar(lista)
     scrollbar.pack(side=RIGHT, fill=Y, pady=20)
-    Entrys.pack(pady=20)
 
-    # Se crean las cajas de texto donde se introducirá la información correspondiente al dispositivo o host
-    labelUsuario = Label(Entrys, text="Introduzca el nombre de usuario para acceder al dispositivo o host")
-    usuario = Entry(Entrys)
-    Entrys.window_create("end", window=labelUsuario)
-    Entrys.insert("end", "\n")
-    Entrys.window_create("end", window=usuario)
-    Entrys.insert("end", "\n")
+    entrylist = Text(lista, height=20, width=150)
 
-    labelContrasenna = Label(Entrys, text="Introduzca la contraseña para acceder al dispositivo o host")
-    contrasenna = Entry(Entrys)
-    Entrys.window_create("end", window=labelContrasenna)
-    Entrys.insert("end", "\n")
-    Entrys.window_create("end", window=contrasenna)
-    Entrys.insert("end", "\n")
+    # Variables para cada uno de los Entrys
+    usuario = StringVar()
+    password = StringVar()
+    puerto = IntVar()
+    descripcion = StringVar()
+    id = StringVar()
+    ip_management = StringVar()
+    type_management = StringVar()
+    nicname_management = StringVar()
+    id_management = StringVar()
+    ip_data = StringVar()
+    type_data = StringVar()
+    nicname_data = StringVar()
+    id_data = StringVar()
+    team = StringVar()
+    tipo = StringVar()
+    so = StringVar()
 
-    labelPuerto = Label(Entrys, text="Introduzca el puerto para acceder al dispositivo o host")
-    puerto = Spinbox(Entrys, from_=1, to=65990)
-    Entrys.window_create("end", window=labelPuerto)
-    Entrys.insert("end", "\n")
-    Entrys.window_create("end", window=puerto)
-    Entrys.insert("end", "\n")
+    variables = [usuario, password, puerto, descripcion, id, ip_management, type_management, nicname_management,
+                 id_management,
+                 ip_data, type_data, nicname_data, id_data, team, tipo, so]
+    # variables_hosts = []
 
-    labelDescripcion = Label(Entrys, text="Introduzca la descripción del dispositivo o host")
-    descripcion = Entry(Entrys)
-    Entrys.window_create("end", window=labelDescripcion)
-    Entrys.insert("end", "\n")
-    Entrys.window_create("end", window=descripcion)
-    Entrys.insert("end", "\n")
+    v = 0
+    i = 0
+    c = 0
+    entrys = []
+    entryHosts = []
+    labels_hosts = ["Introduzca el team correspondiente al host: \n \n",
+                    "Introduzca el tipo de host: \n \n", "Introduzca el sistema operativo que tiene el host: \n \n"]
 
-    labelID= Label(Entrys, text="Introduzca el ID del dispositivo o host")
-    id = Entry(Entrys)
-    Entrys.window_create("end", window=labelID)
-    Entrys.insert("end", "\n")
-    Entrys.window_create("end", window=id)
-    Entrys.insert("end", "\n")
+    labels = ["Introduzca el nombre de usuario para acceder al dispositivo o host: \n \n",
+              "Introduzca la contraseña para acceder al dispositivo o host: \n \n",
+              "Introduzca el puerto para acceder al dispositivo o host: \n \n",
+              "Introduzca la descripción del dispositivo o host \n \n",
+              "Introduzca el ID del dispositivo o host: \n \n",
+              "Introduzca la ip correspondiente a la red de gestión: \n \n",
+              "Introduzca el tipo correspondiente a la red de gestión: \n \n",
+              "Introduzca el nic correspondiente a la red de gestión: \n \n",
+              "Introduzca el id correspondiente a la red de gestión: \n \n",
+              "Introduzca la ip correspondiente a la red de datos: \n \n",
+              "Introduzca el tipo correspondiente a la red de datos: \n \n",
+              "Introduzca el nic correspondiente a la red de datos: \n \n",
+              "Introduzca el id correspondiente a la red de datos \n \n"]
 
-    labelIpmanagement = Label(Entrys, text="Introduzca la ip correspondiente a la red de gestión")
-    ip_management = Entry(Entrys)
-    Entrys.window_create("end", window=labelIpmanagement)
-    Entrys.insert("end", "\n")
-    Entrys.window_create("end", window=ip_management)
-    Entrys.insert("end", "\n")
+    # Bucle que recorre las etiquetas correspondientes a los dispositivos, añadiendo un label y un entry por cada campo del formulario
+    for label in labels:
+        entrys.append(
+            Entry(entrylist, text=label, textvariable=variables[c]))
+        entrylist.insert("end", label)
+        entrylist.window_create("end", window=entrys[c])
+        entrylist.insert("end", "\n \n")
+        c += 1
 
-    labelIpdatos = Label(Entrys, text="Introduzca la ip correspondiente a la red de datos")
-    ip_data = Entry(Entrys)
-    Entrys.window_create("end", window=labelIpdatos)
-    Entrys.insert("end", "\n")
-    Entrys.window_create("end", window=ip_data)
-    Entrys.insert("end", "\n")
+    # Bucle que recorre las etiquetas correspondientes a los hosts, añadiendo un label y un entry por cada campo del formulario
+    for label in labels_hosts:
+        entryHosts.append(
+            Entry(entrylist, text=label, textvariable=variables[c], state=DISABLED))
+        entrylist.insert("end", label)
+        entrylist.window_create("end", window=entryHosts[i])
+        entrylist.insert("end", "\n \n")
+        i += 1
+        c += 1
 
-    #A partir de de aquí los campos son únicamente para los hosts
+    entrylist.pack(pady=20)
+    entrylist.config(yscrollcommand=scrollbar.set)
+    scrollbar.config(command=entrylist.yview)
 
-    entryBtns = []
+    # disable the widget so users can't insert text into it
+    entrylist.configure(state="disabled")
 
-    labelTeam = Label(Entrys, text="Introduzca el team correspondiente al host")
-    team = Entry(Entrys)
-    Entrys.window_create("end", window=labelTeam)
-    Entrys.insert("end", "\n")
-    Entrys.window_create("end", window=team)
-    Entrys.insert("end", "\n")
-    entryBtns.append(team)
-
-
-    labelTipo = Label(Entrys, text="Introduzca el tipo de host ")
-    tipo = Entry(Entrys)
-    Entrys.window_create("end", window=labelTipo)
-    Entrys.insert("end", "\n")
-    Entrys.window_create("end", window=tipo)
-    Entrys.insert("end", "\n")
-    entryBtns.append(tipo)
-
-    labelSo = Label(Entrys, text="Introduzca el sistema operativo que tiene el host")
-    so = Entry(Entrys)
-    Entrys.window_create("end", window=labelSo)
-    Entrys.insert("end", "\n")
-    Entrys.window_create("end", window=so)
-    Entrys.insert("end", "\n")
-    entryBtns.append(so)
-
-    # Desactiva el widget para que los usuarios no puedan introducir texto
-    Entrys.configure(state="disabled")
-
-    # Obtenemos el JSON(diccionario) con toda la información referente a nuestros dispositivos.
-
-
-    #Botón de confirmación que pasa a la función controller 3 argumentos (la acción (Scan), la operación deseada y los valores de los checks en ID
-    btnConfirmation = Button(addWindow, text="Confirmar acción", command=lambda: [
-        mensajePregunta("¿Está seguro de añadir el dispositivo/host al diccionario?", "Confirmar añadido")])
-
-    # Se incluyen los widgets de entrada y los botones
-    labelUsuario.pack(pady=15)
-    usuario.pack(pady=4)
-
-    labelContrasenna.pack(pady=15)
-    contrasenna.pack(pady=4)
-
-    labelPuerto.pack(pady=15)
-    puerto.pack(pady=4)
-
-    labelDescripcion.pack(pady=15)
-    descripcion.pack(pady=4)
-
-    labelID.pack(pady=15)
-    id.pack(pady=4)
-
-    labelIpmanagement.pack(pady=15)
-    ip_management.pack(pady=4)
-
-    labelIpdatos.pack(pady=15)
-    ip_data.pack(pady=4)
-
-    labelTeam.pack(pady=15)
-    team.pack(pady=4)
-
-    labelTipo.pack(pady=15)
-    tipo.pack(pady=4)
-
-    labelSo.pack(pady=15)
-    so.pack(pady=4)
-
-    Entrys.pack(pady=20)
-    Entrys.config(yscrollcommand=scrollbar.set)
-    scrollbar.config(command=Entrys.yview)
+    # Botón de confirmación que pasa a la función controller 3 argumentos (la acción (Scan), la operación deseada y los valores de los checks en ID
+    btnConfirmation = Button(addWindow, text="Confirmar acción",
+                             command=lambda: [controllerDiccionario(accion, variables=variables)])
 
     btnConfirmation.pack()
     btnConfirmation.pack(pady=20)
 
-    lista_entrys.pack()
+    lista.pack()
 

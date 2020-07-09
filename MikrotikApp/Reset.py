@@ -4,6 +4,11 @@ from tiempo import *
 
 
 def reset(ssh, backup):
+    '''
+    :param ssh: Recibe una conexión SSH
+    :param backup: Recibe la ruta absoluta al backup
+    :return: No devuelve nada
+    '''
     scp = SCPClient(ssh.get_transport())
     scp.put(backup,  remote_path='backup');
 
@@ -20,6 +25,10 @@ def reset(ssh, backup):
     stdout = stdout2.readlines()
     print(stdout)
     print(time_string)
+
+    '''
+    Se crea el script y el planificador de tal forma que se resetea el dispositivo
+    '''
 
     stdin, stdout, stderr = ssh.exec_command('/system script add name="reset" source="/system reset-configuration keep-users=yes no-defaults=yes run-after-reset=backup.rsc"')
     stdin, stdout, stderr = ssh.exec_command('/system scheduler add name=reseteo start-time=' + time_string + ' on-event=reset')

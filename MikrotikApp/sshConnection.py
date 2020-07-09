@@ -11,6 +11,13 @@ keyfile_path = 'private_key_file'
 
 
 def connection(host, port, username, password):
+    '''
+    :param host: Recibe un host
+    :param port: Recibe el puerto al que se va a conectar
+    :param username: Recibe el nombre de usuario del host
+    :param password: Recibe la contraseña del host
+    :return: Devuelve una conexión ssh
+    '''
     # Create the SSH client.
     try:
         ssh = paramiko.SSHClient()

@@ -3,6 +3,10 @@ from GUImethods import *
 
 
 def apagado(raiz):
+    '''
+    :param raiz: Recibe la dirección de memoria de la ventana principal
+    :return: No devuelve nada
+    '''
     shutdownWindow = Toplevel(raiz)
     shutdownWindow.title("Apagar Dispositivos")
     shutdownWindow.wm_resizable(0, 0)

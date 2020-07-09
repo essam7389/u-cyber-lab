@@ -2,6 +2,10 @@ from GUIController import controller
 from GUImethods import *
 
 def estado(raiz):
+    '''
+    :param raiz: Recibe la dirección de memoria de la ventana principal
+    :return: No devuelve nada
+    '''
     stateWindow = Toplevel(raiz)
     stateWindow.title("Consultar Dispositivos")
     stateWindow.wm_resizable(0, 0)

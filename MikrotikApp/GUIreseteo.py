@@ -3,6 +3,10 @@ from GUImethods import *
 from tkinter.filedialog import askopenfile
 
 def reseteo(raiz):
+    '''
+    :param raiz: Recibe la dirección de memoria de la ventana principal
+    :return: No devuelve nada
+    '''
     resetWindow = Toplevel(raiz)
     resetWindow.title("Resetear Dispositivos")
     resetWindow.wm_resizable(0, 0)
@@ -63,6 +67,13 @@ def reseteo(raiz):
 
     #Obtenemos un nº concreto de 'files'(archivos de backups) en base a la cantidad de dispositivos que queramos resetear.
     def getFiles(variables_devices, op, ids_devices):
+        '''
+        :param variables_devices: Recibe un vector de variables correspondientes a los dispositivos, donde se especificará
+        si el usuario a seleccionado dicho dispositivo o no
+        :param op: Recibe el tipo de operación, si es 1 será aplicable a todos y si no únicamente a los que se especifiquen en el parámetro ids_devices
+        :param ids_devices: Recibe los ids de los dispositivos de los que se quiere obtener el backup
+        :return: Devuelve una serie de rutas, en función de la cantidad de dispositivos que se quieran resetear
+        '''
         x = 0
         numDevices = i
         files = []
@@ -86,6 +97,9 @@ def reseteo(raiz):
 
     #Se abre una ventana donde el usuario selecciona el archivo(backup) que desea cargar y se guarda en la variable 'file'
     def open_file():
+        '''
+        :return: Devuelve la ruta a un archivo previamente seleccionado por el usuario.
+        '''
         file = askopenfile(mode='r', filetypes=[('Python Files', '*')])
         return file
     print("op.get() = " , op.get())

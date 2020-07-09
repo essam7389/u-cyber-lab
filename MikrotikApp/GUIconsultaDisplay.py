@@ -2,6 +2,15 @@ from tkinter import *
 
 
 def imprimirEstadoGUI(raiz, names, response_gestion, response_datos, ips_gestion, ips_datos):
+    '''
+    :param raiz: Recibe la dirección de memoria de la ventana principal
+    :param names: Recibe un vector de nombres correspondientes a los dispositivos o hosts
+    :param response_gestion: Recibe un vector de respuestas relacionada con los pings realizados a ip de la red de gestión
+    :param response_datos: Recibe un vector de respuestas relacionada con los pings realizados a ip de la red de datos
+    :param ips_gestion: Recibe las ip correspondientes a la red de gestión
+    :param ips_datos: Recibe las ip correspondientes a la red de datos
+    :return: No devuelve nada
+    '''
     displayWindow = Toplevel(raiz)
     displayWindow.title("Consultar Dispositivos")
     displayWindow.wm_resizable(0, 0)

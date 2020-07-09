@@ -2,6 +2,10 @@ from GUIController import controller
 from GUImethods import *
 
 def reinicio(raiz):
+    '''
+    :param raiz: Recibe la dirección de memoria de la ventana principal
+    :return: No devuelve nada
+    '''
     rebootWindow = Toplevel(raiz)
     rebootWindow.title("Reiniciar Dispositivos")
     rebootWindow.wm_resizable(0, 0)

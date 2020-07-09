@@ -1,4 +1,5 @@
 from GUIController import controller
+from GUIControllerDiccionario import controllerDiccionario
 from GUImethods import *
 
 
@@ -29,7 +30,7 @@ def editDiccionario(raiz):
     Label(editWindow, text="Por favor introduzca el identificador del dispositivo o host que desea editar \n").pack()
     id_edit = StringVar()
 
-    Entry(editWindow, textvariable=id_edit)
+    Entry(editWindow, textvariable=id_edit).pack()
 
     # Se crea una lista compuesta de texto y una scrollbar(barra) vertical
     lista = Frame(editWindow)
@@ -44,15 +45,23 @@ def editDiccionario(raiz):
     puerto = IntVar()
     descripcion = StringVar()
     id = StringVar()
-    gestion = StringVar()
-    datos = StringVar()
+    ip_management = StringVar()
+    type_management = StringVar()
+    nicname_management = StringVar()
+    id_management = StringVar()
+    ip_data = StringVar()
+    type_data = StringVar()
+    nicname_data = StringVar()
+    id_data = StringVar()
     team = StringVar()
     tipo = StringVar()
     so = StringVar()
 
 
-    variables = [usuario, password, puerto, descripcion, id, gestion, datos, team, tipo, so]
+    variables = [usuario, password, puerto, descripcion, id, ip_management, type_management, nicname_management, id_management,
+                 ip_data, type_data, nicname_data, id_data, team, tipo, so]
     # variables_hosts = []
+
     v = 0
     i = 0
     c = 0
@@ -60,9 +69,14 @@ def editDiccionario(raiz):
     entryHosts = []
     labels_hosts = ["Introduzca el team correspondiente al host: \n \n",
               "Introduzca el tipo de host: \n \n", "Introduzca el sistema operativo que tiene el host: \n \n"]
+
     labels = ["Introduzca el nombre de usuario para acceder al dispositivo o host: \n \n", "Introduzca la contraseña para acceder al dispositivo o host: \n \n",
-              "Introduzca el puerto para acceder al dispositivo o host: \n \n", "Introduzca la descripción del dispositivo o host \n \n", "Introduzca el ID del dispositivo o host: \n \n",
-              "Introduzca la ip correspondiente a la red de gestión: \n \n", "Introduzca la ip correspondiente a la red de datos \n \n"]
+              "Introduzca el puerto para acceder al dispositivo o host: \n \n", "Introduzca la descripción del dispositivo o host \n \n",
+              "Introduzca el ID del dispositivo o host: \n \n", "Introduzca la ip correspondiente a la red de gestión: \n \n",
+              "Introduzca el tipo correspondiente a la red de gestión: \n \n", "Introduzca el nic correspondiente a la red de gestión: \n \n",
+              "Introduzca el id correspondiente a la red de gestión: \n \n", "Introduzca la ip correspondiente a la red de datos: \n \n",
+              "Introduzca el tipo correspondiente a la red de datos: \n \n", "Introduzca el nic correspondiente a la red de datos: \n \n",
+              "Introduzca el id correspondiente a la red de datos \n \n"]
 
     #Bucle que recorre las etiquetas correspondientes a los dispositivos, añadiendo un label y un entry por cada campo del formulario
     for label in labels:
@@ -83,7 +97,6 @@ def editDiccionario(raiz):
         i += 1
         c += 1
 
-
     entrylist.pack(pady=20)
     entrylist.config(yscrollcommand=scrollbar.set)
     scrollbar.config(command=entrylist.yview)
@@ -92,8 +105,8 @@ def editDiccionario(raiz):
     entrylist.configure(state="disabled")
 
     # Botón de confirmación que pasa a la función controller 3 argumentos (la acción (Scan), la operación deseada y los valores de los checks en ID
-    btnConfirmation = Button(editWindow, text="Confirmar acción", command=lambda: [
-        mensajePregunta("¿Está seguro de editar el dispositivo/host al diccionario?", "Confirmar añadido")])
+    btnConfirmation = Button(editWindow, text="Confirmar acción",
+                             command=lambda: [controllerDiccionario(accion, id_edit, variables)])
 
     btnConfirmation.pack()
     btnConfirmation.pack(pady=20)
