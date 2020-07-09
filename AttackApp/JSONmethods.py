@@ -12,18 +12,27 @@ def existKey(lista, key):
 ruta_absoluta = "C:\\Users\\Aru-kun\\Documents\\TFG\\Scripts Python\\AttackApp\\Diccionarios\\"
 
 def getDevices():
+    '''
+    :return: Devuelve las direcciones de todos los dispositivos, es decir, devuelve en formato JSON todos y cada uno de los dispositivos.
+    '''
     with open(ruta_absoluta+'dispositivos.json', 'r') as f:  # Se realiza la lectura del fichero JSON
         direcciones_dict = json.load(f)  # Se guardan los datos del fichero JSON en la variable direcciones_dict que nos permitirá acceder a los diversos campos del JSON
     return (direcciones_dict)
 
 
 def getHosts():
+    '''
+    :return: Devuelve las direcciones de todos los hosts, es decir, devuelve en formato JSON todos y cada uno de los hosts.
+    '''
     with open(ruta_absoluta+'host.json', 'r') as f:  # Se realiza la lectura del fichero JSON
         direcciones_dict = json.load(f)  # Se guardan los datos del fichero JSON en la variable direcciones_dict que nos permitirá acceder a los diversos campos del JSON
     return (direcciones_dict)
 
 
 def getClientHosts():
+    '''
+    :return: Devuelve las direcciones de todos los hosts que tienen el rol de ser clientes, es decir, devuelve en formato JSON todos y cada uno de los hosts con rol cliente.
+    '''
     with open(ruta_absoluta+'host.json', 'r') as f:  # Se realiza la lectura del fichero JSON
         diccionario_hosts = json.load(f)  # Se guardan los datos del fichero JSON en la variable direcciones_dict que nos permitirá acceder a los diversos campos del JSON
 
@@ -38,6 +47,10 @@ def getClientHosts():
     return (hosts)
 
 def getServerHosts():
+    '''
+    :return: Devuelve las direcciones de todos los hosts que tienen el rol de ser clientes, es decir, devuelve en formato JSON todos y cada uno de los hosts con rol cliente.
+    '''
+
     with open(ruta_absoluta+'host.json', 'r') as f:  # Se realiza la lectura del fichero JSON
         diccionario_hosts = json.load(
             f)  # Se guardan los datos del fichero JSON en la variable direcciones_dict que nos permitirá acceder a los diversos campos del JSON
@@ -53,6 +66,9 @@ def getServerHosts():
     return (hosts)
 
 def getAttackHosts():
+    '''
+    :return: Devuelve las direcciones de todos los hosts que tienen el rol de ser atacantes, es decir, devuelve en formato JSON todos y cada uno de los hosts con rol atacante.
+    '''
     with open(ruta_absoluta+'host.json', 'r') as f:  # Se realiza la lectura del fichero JSON
         diccionario_hosts = json.load(
             f)  # Se guardan los datos del fichero JSON en la variable direcciones_dict que nos permitirá acceder a los diversos campos del JSON
@@ -69,6 +85,10 @@ def getAttackHosts():
 
 
 def getDevicesBynic(nics):
+    '''
+    :param nics: Recibe una serie de ids correspondientes a dispositivos
+    :return: Devuelve los dispositivos cuyo ids coinciden con los nics que se han recibido como parámetro en la función
+    '''
     direcciones_dict = getDevices()
     #print(direcciones_dict)
     values = []
@@ -92,6 +112,10 @@ def getDevicesBynic(nics):
     return(diccionario)
 
 def getHostsBynic(nics):
+    '''
+    :param nics: Recibe una serie de ids correspondientes a hosts
+    :return: Devuelve los hosts cuyo ids coinciden con los nics que se han recibido como parámetro en la función
+    '''
     direcciones_dict = getHosts()
     values = []
 
@@ -116,6 +140,10 @@ def getHostsBynic(nics):
     return(diccionario)
 
 def getClientHostsBynic(nics):
+    '''
+    :param nics: Recibe una serie de ids correspondiente a hosts con rol cliente
+    :return: Devuelve los hosts cuyo ids coinciden con los nics que se han recibido como parámetro en la función
+    '''
     direcciones_dict = getHosts()
     values = []
 
@@ -146,6 +174,10 @@ def getClientHostsBynic(nics):
 
 
 def getServerHostsBynic(nics):
+    '''
+    :param nics: Recibe una serie de ids correspondiente a hosts con rol servidor
+    :return: Devuelve los servidores cuyo ids coinciden con los nics que se han recibido como parámetro en la función
+    '''
     direcciones_dict = getHosts()
     values = []
     host = ""
@@ -174,6 +206,10 @@ def getServerHostsBynic(nics):
     return(servidores)
 
 def getHostByIp(ip):
+    '''
+    :param ip: Recibe una ip correspondiente a un host
+    :return:  Devuelve el host al que corresponde dicha ip
+    '''
     direcciones_dict = getHosts()
     host = ""
     print("ip = " + ip)
@@ -190,6 +226,10 @@ def getHostByIp(ip):
 
 
 def getDeviceByIp(ip):
+    '''
+    :param ip: Recibe una ip correspondiente a un dispositivo
+    :return: Devuelve el dispositivo al que corresponde dicha ip
+    '''
     direcciones_dict = getDevices()
     device = ""
     print("ip = " + ip)

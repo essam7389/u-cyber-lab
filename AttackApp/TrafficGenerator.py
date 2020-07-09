@@ -8,6 +8,14 @@ from os import remove
 
 
 def generarTrafico(clientes_hosts, servidores_hosts, tiempo = 0, ruta_diccionario = "", ruta_trafficFlow = ""):
+    '''
+    :param clientes_hosts:
+    :param servidores_hosts:
+    :param tiempo:
+    :param ruta_diccionario:
+    :param ruta_trafficFlow:
+    :return:
+    '''
 
     #Primero, escribimos en un diccionario JSON la lista de servidores a los cuales queremos generar el tráfico
     with open('Diccionarios\\servidores_hosts.json', 'w') as file:
