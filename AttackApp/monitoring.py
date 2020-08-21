@@ -11,14 +11,16 @@ def monitorizar(hosts_emisor, hosts_receptor):
         ip_emisor = emisor.get("nics")['management']['IP']
         print("ip_emisor = " + ip_emisor)
         ssh = connection(ip_emisor, port, username, password)
-        print("Monitoraizando tráfico...")
-        stdin, stdout, stderr = ssh.exec_command('/ip traffic-flow set enabled=yes')
+        print("Monitorizando tráfico...")
+       # stdin, stdout, stderr = ssh.exec_command('/ip traffic-flow set enabled=yes')
         for target in hosts_receptor.get("devices"):
             ip_receptor = target.get("nics")['management']['IP']
             stdin, stdout, stderr = ssh.exec_command('/ip traffic-flow target add dst-address=' + ip_receptor + " port = 2055 version=9")
+            print("ip_receptor = ", ip_receptor)
 
         respuesta = ""
         for line in stdout:
             salida = "'... '" + line.strip('\n')
             respuesta += salida
             print(salida)
+        ssh.close()

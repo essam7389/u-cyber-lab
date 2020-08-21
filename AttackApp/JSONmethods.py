@@ -43,7 +43,7 @@ def getClientHosts():
             values.append({'name': host.get("name"), 'id': host.get("id"), 'team': host.get("team"), 'tipo': host.get("tipo"), 'SO':host.get("SO"),
                            'description': host.get("description"), 'nics': host.get("nics")['data']})
     hosts['hosts'] = values
-    print(hosts)
+    #print(hosts)
     return (hosts)
 
 def getServerHosts():
@@ -93,11 +93,11 @@ def getDevicesBynic(nics):
     #print(direcciones_dict)
     values = []
 
-    print("He entrado en getJsonBynic")
-    print(direcciones_dict)
+    #print("He entrado en getJsonBynic")
+    #print(direcciones_dict)
     diccionario = direcciones_dict.fromkeys(direcciones_dict.keys())
-    print(diccionario)
-    print(nics)
+    #print(diccionario)
+    #print(nics)
 
     for i in nics:
         for device in direcciones_dict.get("devices"):
@@ -106,9 +106,9 @@ def getDevicesBynic(nics):
      'team': device.get("team"), 'tipo': device.get("tipo"), 'SO':device.get("SO"), 'description': device.get("description"), 'nics': device.get("nics")})
 
     diccionario['devices'] = values
-    print("claves del diccionario: ")
-    print(diccionario.keys())
-    print(diccionario)
+    #print("claves del diccionario: ")
+    #print(diccionario.keys())
+    #print(diccionario)
     return(diccionario)
 
 def getHostsBynic(nics):
@@ -119,11 +119,11 @@ def getHostsBynic(nics):
     direcciones_dict = getHosts()
     values = []
 
-    print("He entrado en getJsonBynic")
-    print(direcciones_dict)
+    #print("He entrado en getJsonBynic")
+    #print(direcciones_dict)
     diccionario = direcciones_dict.fromkeys(direcciones_dict.keys())
-    print(diccionario)
-    print(nics)
+    #print(diccionario)
+    #print(nics)
 
     for i in nics:
         for host in direcciones_dict.get("hosts"):
@@ -134,9 +134,9 @@ def getHostsBynic(nics):
 
 
     diccionario['hosts'] = values
-    print("claves del diccionario: ")
-    print(diccionario.keys())
-    print(diccionario)
+    #print("claves del diccionario: ")
+    #print(diccionario.keys())
+    #print(diccionario)
     return(diccionario)
 
 def getClientHostsBynic(nics):
@@ -147,10 +147,10 @@ def getClientHostsBynic(nics):
     direcciones_dict = getHosts()
     values = []
 
-    print("He entrado en getClientHostsBynic")
+    #print("He entrado en getClientHostsBynic")
     #print(direcciones_dict)
     clientes = direcciones_dict.fromkeys(direcciones_dict.keys())
-    print(clientes)
+    #print(clientes)
     #print(nics)
 
     for i in nics:
@@ -158,18 +158,18 @@ def getClientHostsBynic(nics):
         if (ip):
             i = getHostByIp(i)
         for cliente in direcciones_dict.get("hosts"):
-            print("i = " + i)
+            #print("i = " + i)
             if(cliente.get("id")==i and cliente.get("tipo") == "Cliente"):
-                print("He entrado en el IF")
+               # print("He entrado en el IF")
                 values.append({'username': cliente.get("username"), 'password': cliente.get("password"), 'port': cliente.get("port"), 'name': cliente.get("name"), 'id': cliente.get("id"),
      'team': cliente.get("team"), 'tipo': cliente.get("tipo"), 'SO':cliente.get("SO"), 'description': cliente.get("description"), 'nics': cliente.get("nics")})
 
 
-    print("VALUES = ".format(values))
+    #print("VALUES = ".format(values))
     clientes['hosts'] = values
-    print("claves del diccionario: ")
-    print(clientes.keys())
-    print(clientes)
+    #print("claves del diccionario: ")
+    #print(clientes.keys())
+    #print(clientes)
     return(clientes)
 
 
@@ -182,11 +182,11 @@ def getServerHostsBynic(nics):
     values = []
     host = ""
 
-    print("He entrado en getJsonBynic")
-    print(direcciones_dict)
+    #print("He entrado en getJsonBynic")
+    #print(direcciones_dict)
     servidores = direcciones_dict.fromkeys(direcciones_dict.keys())
-    print(servidores)
-    print(nics)
+   # print(servidores)
+    #print(nics)
 
     for i in nics:
         ip = re.search(exp, i)
@@ -195,14 +195,14 @@ def getServerHostsBynic(nics):
             i = getHostByIp(i)
         for servidor in direcciones_dict.get("hosts"):
             if(servidor.get("id")==i and servidor.get("tipo") == "Servidor"):
-                print("Estoy construyendo el JSON")
+                #print("Estoy construyendo el JSON")
                 values.append({'username': servidor.get("username"), 'password': servidor.get("password"), 'port': servidor.get("port"), 'name': servidor.get("name"), 'id': servidor.get("id"),
      'team': servidor.get("team"), 'tipo': servidor.get("tipo"), 'SO':servidor.get("SO"), 'description': servidor.get("description"), 'nics': servidor.get("nics")})
 
     servidores['hosts'] = values
-    print("claves del diccionario: ")
-    print(servidores.keys())
-    print(servidores)
+    #print("claves del diccionario: ")
+    #print(servidores.keys())
+    #print(servidores)
     return(servidores)
 
 def getHostByIp(ip):
@@ -212,16 +212,16 @@ def getHostByIp(ip):
     '''
     direcciones_dict = getHosts()
     host = ""
-    print("ip = " + ip)
-    print("He entrado en getHostByIp")
+    #print("ip = " + ip)
+    #print("He entrado en getHostByIp")
     for ip_host in direcciones_dict.get("hosts"):
-        print("ip-gestion = ", ip_host.get("nics")['management']['IP'])
+        #print("ip-gestion = ", ip_host.get("nics")['management']['IP'])
         if(ip == ip_host.get("nics")['management']['IP'] or ip == ip_host.get("nics")['data']['IP']):
-            print("Se comprueba la condición y es true")
+            #print("Se comprueba la condición y es true")
             host = ip_host.get("id")
 
-    print("El hosts es = ")
-    print(host)
+   # print("El hosts es = ")
+    #print(host)
     return (host)
 
 
@@ -232,14 +232,14 @@ def getDeviceByIp(ip):
     '''
     direcciones_dict = getDevices()
     device = ""
-    print("ip = " + ip)
-    print("He entrado en getHostByIp")
+    #print("ip = " + ip)
+    #print("He entrado en getHostByIp")
     for ip_device in direcciones_dict.get("devices"):
-        print("ip-gestion = ", ip_device.get("nics")['management']['IP'])
+        #print("ip-gestion = ", ip_device.get("nics")['management']['IP'])
         if (ip == ip_device.get("nics")['management']['IP']):
-            print("Se comprueba la condición y es true")
+            #print("Se comprueba la condición y es true")
             device = ip_device.get("id")
 
-    print("El hosts es = ")
-    print(device)
+    #print("El hosts es = ")
+    #print(device)
     return (device)

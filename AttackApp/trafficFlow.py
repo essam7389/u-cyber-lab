@@ -6,7 +6,7 @@ from random import randint
 import numpy
 
 
-ruta_diccionario_kali = "/root/Documents/Diccionarios/servidores_hosts.json"
+ruta_diccionario_kali = "/home/kali/Documents/Diccionarios/servidores_hosts.json"
 print("He entrado en el archivo")
 rand_exp = numpy.random.exponential(scale=10)
 

@@ -9,10 +9,10 @@ from os import remove
 
 def generarTrafico(clientes_hosts, servidores_hosts, tiempo = 0, ruta_diccionario = "", ruta_trafficFlow = ""):
     '''
-    :param clientes_hosts:
-    :param servidores_hosts:
-    :param tiempo:
-    :param ruta_diccionario:
+    :param clientes_hosts: Se recibe un vector que contiene los clientes desde los que se enviarán peticiones GET
+    :param servidores_hosts: Se recibe un vector que contiene los servidores hacia los que se enviarán peticiones GET
+    :param tiempo: Recibe el tiempo que estará activo la generación de tráfico que por defecto será 0 ( y tendremos que pararla manualmente)
+    :param ruta_diccionario: Recibe una ruta a los diccionarios
     :param ruta_trafficFlow:
     :return:
     '''
@@ -23,11 +23,11 @@ def generarTrafico(clientes_hosts, servidores_hosts, tiempo = 0, ruta_diccionari
 
     #Ruta por defecto donde se guardará el diccionario y el archivo trafficFlow.py
     ruta_diccionario_origen = "Diccionarios\servidores_hosts.json"
-    ruta_diccionario_destino = "/root/Documents/Diccionarios/servidores_hosts.json"
+    ruta_diccionario_destino = "/home/kali/Documents/Diccionarios/servidores_hosts.json"
 
    # if(ruta_trafficFlow == ""):
     ruta_trafficFlow_origen = "trafficFlow.py"
-    ruta_trafficFlow_destino = "/root/Documents/scripts/trafficFlow.py"
+    ruta_trafficFlow_destino = "/home/kali/Documents/scripts/trafficFlow.py"
 
     print("Estoy antes del bucle  for")
     salida = ""
@@ -51,8 +51,8 @@ def generarTrafico(clientes_hosts, servidores_hosts, tiempo = 0, ruta_diccionari
         remove("Diccionarios\servidores_hosts.json")
         print("Generando tráfico...")
         if(sistema == "Kali Linux"):
-            stdin, stdout, stderr = ssh.exec_command('tmux | python3  /root/Documents/scripts/trafficFlow.py | tmux detach')
-            print("Se ha terminado de generar tráfico")
+            stdin, stdout, stderr = ssh.exec_command('tmux | python3  /home/kali/Documents/scripts/trafficFlow.py | tmux detach')
+
         elif(sistema == "Ubuntu Mate"):
             stdin, stdout, stderr = ssh.exec_command(
                 'tmux | python3  /home/ucase/Documentos/trafficFlow.py | tmux detach')
@@ -67,6 +67,10 @@ def generarTrafico(clientes_hosts, servidores_hosts, tiempo = 0, ruta_diccionari
 
 
 def apagarTrafico(clientes_hosts):
+    '''
+    :param clientes_hosts: Recibe un diccionario de los clientes que están generando el tráfico
+    :return:
+    '''
     for host in clientes_hosts.get("hosts"):
 
         username = host.get("username")

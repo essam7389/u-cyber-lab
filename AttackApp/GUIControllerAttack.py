@@ -1,7 +1,7 @@
 from tkinter.ttk import Progressbar
 from tkinter import *
 from GUIScanDisplay import *
-from GUImethods import loadingStop, loading
+
 from JSONmethods import *
 from TrafficGenerator import *
 from operationsServers import *
@@ -11,10 +11,10 @@ from sshAttack import *
 from monitoring import *
 
 
-def actionConfirmation(accion, operacion, hosts_origen = [], hosts_destino = [], mask = [], tiempo = 0, suboperacion = "", GUI=None, GUIsecundaria=None):
+'''def actionConfirmation(accion, operacion, hosts_origen = [], hosts_destino = [], mask = [], tiempo = 0, suboperacion = "", GUI=None, GUIsecundaria=None):
     controller(accion, operacion, hosts_origen, hosts_destino, mask, tiempo, suboperacion, GUI)
     GUIsecundaria.destroy()
-    loading(GUI)
+    loading(GUI)'''
 
 def controller(accion, operacion, hosts_origen = [], hosts_destino = [], mask = [], tiempo = 0, suboperacion = "", GUI=None):
     '''
@@ -29,7 +29,7 @@ def controller(accion, operacion, hosts_origen = [], hosts_destino = [], mask = 
     '''
     #print("dispositivos = " .format(hosts))
     #print(hosts)
-    print("operación = ".format(operacion))
+    #print("operación = ".format(operacion))
     #print("dispositivos = " .format(hosts))
 
 
@@ -70,7 +70,7 @@ def controller(accion, operacion, hosts_origen = [], hosts_destino = [], mask = 
         if(suboperacion == "--s"):
             desactivarServidor(servidores_hosts)
         else:
-            print("Estoy llamando a la función")
+            #print("Estoy llamando a la función")
             activarServidor(servidores_hosts)
 
     elif(accion == "Scan"):
@@ -80,10 +80,10 @@ def controller(accion, operacion, hosts_origen = [], hosts_destino = [], mask = 
             password = atacante.get("password")
             port = atacante.get("port")
             ip = atacante.get("nics")['management']['IP']
-            print("IP = " + ip)
+            #print("IP = " + ip)
             for target in hosts_destino:
                 ssh = connection(ip, port, username, password)
-                print("ip_objetivo = "+ target)
+                #print("ip_objetivo = "+ target)
 
                 resultado = scan(ssh, target, mascara.__next__(), GUI)
                 print("Resultado = ")
@@ -91,7 +91,7 @@ def controller(accion, operacion, hosts_origen = [], hosts_destino = [], mask = 
 
 
     elif(accion == "SSHAttack"):
-        print("He entrado en la acción SSHAttack")
+       # print("He entrado en la acción SSHAttack")
         display = False
         '''if(GUI!=None):
             print("He destruido la ventana y estoy creando la barra de progreso")
@@ -106,11 +106,11 @@ def controller(accion, operacion, hosts_origen = [], hosts_destino = [], mask = 
             puerto = atacante.get('port')
             sistema = atacante.get('SO')
 
-            print("Intento conectar con el atacante")
+            #print("Intento conectar con el atacante")
             ssh = connection(ip, puerto, username, password)
             sshAttack(ssh, hosts_destino, sistema, usernarme_dict="", password_dict="", GUI=GUI)
 
-        loadingStop(GUI)
+        #loadingStop(GUI)
 
     elif(accion == "Monitorizar"):
         monitorizar(clientes_hosts, servidores_hosts)

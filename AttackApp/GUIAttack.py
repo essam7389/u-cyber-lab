@@ -1,5 +1,5 @@
 from tkinter import *
-from GUIScan import *
+import GUIScan as escanear
 from GUISSHAttack import *
 from GUITraffic import *
 from GUIServidor import *
@@ -14,11 +14,11 @@ raiz.title("GUI-Attack")
 #Función para el tamaño de la ventana
 raiz.resizable(0,0)
 #Cambio del icono predeterminado
-icono = PhotoImage(file='gui-icon-attack2.png')
+icono = PhotoImage(file='attackIcon.png')
 raiz.iconphoto(False, icono)
 
 raiz.geometry("500x500")#Le damos a la ventana un tamaño en ancho y alto
-foto = PhotoImage(file="gui-icon-attack2.png")
+foto = PhotoImage(file="attackIcon.png")
 Label(raiz, image=foto).pack()
 
 frame = Frame(raiz) #Creamos un frame
@@ -26,10 +26,10 @@ frame.pack(fill="both", expand="true", pady=15)    #Empaquetamos el frame dentro
 frame.config(width="600", height="300", cursor="pirate")
 #A partir de aquí vamos creando los botones correspondientes a las diferentes opciones:
 
-btnScan = Button(frame, text="Escanear Red", justify=CENTER, command=lambda: scan(raiz))
-btnTraffic = Button(frame, text="Generar Tráfico", justify=CENTER, command=lambda: generateTraffic(raiz))
-btnSshAttack = Button(frame, text="SSH Attack", justify=CENTER, command=lambda: sshAttack(raiz))
-btnServer = Button(frame, text="Activar Servidores", justify=CENTER, command=lambda: servers(raiz))
+btnScan = Button(frame, text="Escanear Red", justify=CENTER, command=lambda: escanear.scan(raiz))
+btnTraffic = Button(frame, text="Activar/Desactivar Tráfico", justify=CENTER, command=lambda: generateTraffic(raiz))
+btnSshAttack = Button(frame, text="Ataque SSH", justify=CENTER, command=lambda: sshAttack(raiz))
+btnServer = Button(frame, text="Activar/Desactivar Servidores", justify=CENTER, command=lambda: servers(raiz))
 btnMonitorizar = Button(frame, text="Monitorizar", justify=CENTER, command=lambda: monitorizar(raiz))
 
 #Se generan los botones en la interfáz de manera gráfica

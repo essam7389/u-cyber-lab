@@ -1,7 +1,7 @@
 from sshConnection import *
 
 def activarServidor(servidores_hosts):
-    print("He entrado en activar servidor")
+    #print("He entrado en activar servidor")
 
     for servidor in servidores_hosts.get("hosts"):
         print(servidor)

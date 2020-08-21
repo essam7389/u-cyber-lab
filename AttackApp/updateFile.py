@@ -13,9 +13,9 @@ def updateFile(ssh, ruta_origen, sistema = "", ruta_destino = ""):
     '''
 
     try:
-
+        print("ruta de destino = ", ruta_destino)
         scp = SCPClient(ssh.get_transport())
-        ruta_defecto_kali = "/root/Documents/scripts/"
+        ruta_defecto_kali = "/home/kali/Documents/scripts/"
         ruta_defecto_ubuntu = "/home/ucase/Documentos/scripts/"
         print("sistema = " + sistema)
         print("ruta_destino = " + ruta_destino)

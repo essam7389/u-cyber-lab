@@ -10,6 +10,8 @@ def servers(raiz):
     stateWindow.title("Activar Servidores")
     stateWindow.wm_resizable(0, 0)
     stateWindow.geometry("400x300")
+    icono = PhotoImage(file='attackIcon.png')
+    stateWindow.iconphoto(False, icono)
 
     op = IntVar()
     # Texto previo a las opciones básicas
@@ -17,9 +19,9 @@ def servers(raiz):
 
     # Opciones básicas, se debe elegir una u otra pero no ambas
 
-    consultar_all = Radiobutton(stateWindow, text="Consultar todos los dispositivos", variable=op, value=1,
+    consultar_all = Radiobutton(stateWindow, text="Activar/Desactivar todos los hosts", variable=op, value=1,
                                 command=lambda: disabled(checkBtns))
-    consultar_single = Radiobutton(stateWindow, text="Consultar un dispositivo concreto", variable=op, value=2,
+    consultar_single = Radiobutton(stateWindow, text="Activar/Desactivar uno o varios hosts concretos", variable=op, value=2,
                                    command=lambda: enabled(checkBtns))
 
     consultar_all.pack()

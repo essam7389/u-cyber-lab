@@ -6,11 +6,13 @@ def scan(raiz):
     :param raiz: Recibe una dirección a la interfáz gráfica principal de la aplicación
     :return: No devuelve nada
     '''
-
+    print("He entrado en scan")
     stateWindow = Toplevel(raiz)
     stateWindow.title("Escanear Dispositivos")
     stateWindow.wm_resizable(0, 0)
     stateWindow.geometry("400x450")
+    icono = PhotoImage(file='attackIcon.png')
+    stateWindow.iconphoto(False, icono)
 
     op = IntVar()
     # Texto previo a las opciones básicas
@@ -18,9 +20,9 @@ def scan(raiz):
 
     # Opciones básicas, se debe elegir una u otra pero no ambas
 
-    scan_all = Radiobutton(stateWindow, text="Escanear todos los hosts", variable=op, value=1,
+    scan_all = Radiobutton(stateWindow, text="Escanear desde todos los hosts", variable=op, value=1,
                                 command=lambda: disabled(checkBtns))
-    scan_single = Radiobutton(stateWindow, text="Escanear una serie de hosts", variable=op, value=2,
+    scan_single = Radiobutton(stateWindow, text="Escanear desde una serie de hosts", variable=op, value=2,
                                    command=lambda: enabled(checkBtns))
 
     scan_all.pack()

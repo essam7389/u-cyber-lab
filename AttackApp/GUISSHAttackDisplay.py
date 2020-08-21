@@ -8,11 +8,15 @@ def imprimirSSHAttackGUI(raiz, stdout):
     :return:
     '''
 
+    print("He entrado en imprimiSSHAttack")
+
     #Se crea la ventana donde se imprimirá la información de salida del ataque ssh
     displayWindow = Toplevel(raiz)
     displayWindow.title("Display SSHAttack hosts")
     displayWindow.wm_resizable(0, 0)
     displayWindow.geometry("400x320")
+    icono = PhotoImage(file='attackIcon.png')
+    displayWindow.iconphoto(False, icono)
 
     scrollbar = Scrollbar(displayWindow)
     text = Text(displayWindow, yscrollcommand=scrollbar.set)

@@ -13,6 +13,8 @@ def imprimirScanGUI(raiz, stdout):
     displayWindow.title("Display Scan hosts")
     displayWindow.wm_resizable(0, 0)
     displayWindow.geometry("400x320")
+    icono = PhotoImage(file='attackIcon.png')
+    displayWindow.iconphoto(False, icono)
 
     scrollbar = Scrollbar(displayWindow)
     text = Text(displayWindow, yscrollcommand=scrollbar.set)

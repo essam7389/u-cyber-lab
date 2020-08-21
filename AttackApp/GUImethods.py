@@ -50,7 +50,7 @@ def loading(raiz):
     :param raiz: Recibe una dirección a la interfáz gráfica principal de la aplicación
     :return: No devuelve nada
     '''
-    print("raiz = " .format(raiz))
+    #print("raiz = " .format(raiz))
     progressAttackWindow = Toplevel(raiz)
     progressAttackWindow.title("SSHAttack progreso")
     progressAttackWindow.wm_resizable(0, 0)
@@ -58,14 +58,14 @@ def loading(raiz):
     progressbar = Progressbar(progressAttackWindow)
     progressbar.place(x=30, y=60, width=200)
     progressbar.start(10)
-    print("Salgo de loading")
+   # print("Salgo de loading")
 
-def loadingStop(raiz):
+#def loadingStop(raiz):
     '''
     :param raiz: Recibe una dirección a la interfáz gráfica principal de la aplicación
     :return: No devuelve nada
     '''
-    raiz.progressbar.stop()
+    #raiz.progressbar.stop()
 
 
 def comprobarIP(ip):
@@ -75,14 +75,17 @@ def comprobarIP(ip):
     '''
 
     exp = "^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$"
+    print("ip = ", ip)
     if(re.search(exp, str(ip))):
+        print("devuelvo true")
         return True
 
     elif(ip == ""):
+        print("devuelvo false con ip vacia")
         return False
     else:
-        mensajeError()
-        return False
+        mensajeError("La ip introducida es errónea", "IP Errónea")
+        exit()
 
 
 
@@ -114,7 +117,10 @@ def getIP(lista_ips):
     '''
     ips = []
     for ip in lista_ips:
-        ips.append(ip.get())
+
+        if(comprobarIP(ip.get()) == True):
+            ips.append(ip.get())
+
 
     return ips
 def getMask(mascaras):

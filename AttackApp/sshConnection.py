@@ -49,6 +49,7 @@ def connection(host, port, username, password):
         messagebox.showerror(message="Ha ocurrido un error al intentar conectar con el dispositivo", title="Error al conectar")
         exit()
 
+
     return (ssh)
 
 '''

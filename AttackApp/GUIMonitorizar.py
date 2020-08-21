@@ -7,21 +7,23 @@ def monitorizar(raiz):
     :return: No devuelve nada
     '''
 
-    stateWindow = Toplevel(raiz)
-    stateWindow.title("SSH Attack")
-    stateWindow.wm_resizable(0, 0)
-    stateWindow.geometry("400x500")
+    monitoringWindow = Toplevel(raiz)
+    monitoringWindow.title("SSH Attack")
+    monitoringWindow.wm_resizable(0, 0)
+    monitoringWindow.geometry("400x500")
+    icono = PhotoImage(file='attackIcon.png')
+    monitoringWindow.iconphoto(False, icono)
 
     op = IntVar()
     # Texto previo a las opciones básicas
-    Label(stateWindow, text="Por favor seleccione una opción: ").pack(pady=10)
+    Label(monitoringWindow, text="Por favor seleccione una opción: ").pack(pady=10)
 
     # Opciones básicas, se debe elegir una u otra pero no ambas
 
-    scan_all = Radiobutton(stateWindow, text="Redireccionar tráfico desde todos los dispositivos",
+    scan_all = Radiobutton(monitoringWindow, text="Redireccionar tráfico desde todos los dispositivos",
                            variable=op, value=1,
                            command=lambda: disabled(checkBtns))
-    scan_single = Radiobutton(stateWindow, text="Redireccionar tráfico desde uno o varios dispositivos concretos",
+    scan_single = Radiobutton(monitoringWindow, text="Redireccionar tráfico desde uno o varios dispositivos concretos",
                               variable=op, value=2,
                               command=lambda: enabled(checkBtns))
 
@@ -32,8 +34,8 @@ def monitorizar(raiz):
 
     # Se pide introducir la dirección del manager al cuál se le va a reenviar mediante netflow los datos de monitorización
     direcciones = []
-    LDireccion = Label(stateWindow, text="Introduzca la dirección a la que se enviarán los datos de monitorización")
-    Direccion = Entry(stateWindow)
+    LDireccion = Label(monitoringWindow, text="Introduzca la dirección a la que se enviarán los datos de monitorización")
+    Direccion = Entry(monitoringWindow)
     reg = Direccion.register(comprobarIP)
     Direccion.config(validate="focusout", validatecommand=(reg, "%s"))
     direcciones.append(Direccion)
@@ -42,7 +44,7 @@ def monitorizar(raiz):
     diccionario_devices = getDevices()
 
     # Se crea una lista compuesta de texto y una scrollbar(barra) vertical para los clientes
-    lista_devices = Frame(stateWindow)
+    lista_devices = Frame(monitoringWindow)
     scrollbar_devices = Scrollbar(lista_devices)
     scrollbar_devices.pack(side=RIGHT, fill=Y, pady=20)
 
@@ -82,11 +84,11 @@ def monitorizar(raiz):
     checklistDevices.configure(state="disabled")
 
     # Botón de confirmación que pasa a la función controller 3 argumentos (la acción (Monitorizar), la operación deseada y los valores de los checks en ID
-    btnConfirmation = Button(stateWindow, text="Confirmar acción", command=lambda: [
+    btnConfirmation = Button(monitoringWindow, text="Confirmar acción", command=lambda: [
         controller(accion, getOpValues(op.get()),
                    hosts_origen=getCheckValuesDevices(variables_devices, ids_devices, op.get()),
                    hosts_destino=getIP(direcciones),
-                   GUI=raiz), stateWindow.destroy()])
+                   GUI=raiz), monitoringWindow.destroy()])
     LDireccion.pack(pady=15)
     Direccion.pack(pady=4)
 
