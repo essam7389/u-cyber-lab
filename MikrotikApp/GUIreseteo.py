@@ -18,8 +18,8 @@ def reseteo(raiz):
     Label(resetWindow, text="Por favor seleccione una opción: ").pack()
 
     #Opciones básicas, se debe elegir una u otra pero no ambas
-    Reboot_all = Radiobutton(resetWindow, text="Resetear todos los dispositivos", variable=op, value=1, command=lambda: disabled(checkBtns))
-    Reboot_single = Radiobutton(resetWindow, text="Resetear un dispositivo concreto", variable=op, value=2, command=lambda: enabled(checkBtns))
+    Reboot_all = Radiobutton(resetWindow, text="Resetear todos los dispositivos/hosts", variable=op, value=1, command=lambda: disabled(checkBtns))
+    Reboot_single = Radiobutton(resetWindow, text="Resetear un dispositivo/host concreto", variable=op, value=2, command=lambda: enabled(checkBtns))
 
     Reboot_all.pack()
     Reboot_single.pack()
@@ -93,6 +93,8 @@ def reseteo(raiz):
                 if(x != "cero"):
                     file = open_file()
                     files.append(file)
+
+        print("LA RUTA ES: ", files[0])
         return files
 
     #Se abre una ventana donde el usuario selecciona el archivo(backup) que desea cargar y se guarda en la variable 'file'
@@ -101,7 +103,8 @@ def reseteo(raiz):
         :return: Devuelve la ruta a un archivo previamente seleccionado por el usuario.
         '''
         file = askopenfile(mode='r', filetypes=[('Python Files', '*')])
-        return file
+        print("La ruta es= ", file)
+        return file.name
     print("op.get() = " , op.get())
 
     btnConfirmation = Button(resetWindow, text="Confirmar acción", command=lambda: [controller(accion, getOpValues(op.get()), getCheckValuesDevices(variables_devices, ids_devices, op.get()), raiz, rutas=getFiles(variables_devices, op.get(), ids_devices)), resetWindow.destroy()])

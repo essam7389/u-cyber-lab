@@ -3,7 +3,7 @@ from tiempo import tiempo
 def apagar(ssh):
     '''
       :param ssh: Recibe una conexión SSH al o los dispositivos que se desean apagar.
-      :return:
+      :return: No devuelve nada
       '''
     print("El dispositivo se apagará a las: ")
     time_string = tiempo(ssh)
@@ -21,3 +21,5 @@ def apagar(ssh):
     stdout = stdout4.readlines()
     print(stdout)
     print("Apagando...")
+    ssh.close()
+    

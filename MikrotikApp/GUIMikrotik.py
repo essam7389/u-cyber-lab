@@ -23,7 +23,7 @@ raiz.geometry("500x450")#Le damos a la ventana un tamaño en ancho y alto
 foto = PhotoImage(file="gui-icon.png")
 Label(raiz, image=foto).pack()
 
-menu = Menu(raiz)
+'''menu = Menu(raiz)
 
 new_item = Menu(menu)
 
@@ -36,16 +36,16 @@ new_item.add_command(label='Eliminar')
 
 
 raiz.config(menu=menu)
-
+'''
 frame = Frame(raiz) #Creamos un frame
 frame.pack(fill="both" ,expand="true", pady=15)    #Empaquetamos el frame dentro de la ventana
 frame.config(width="600", height="300", cursor="pirate")
 #A partir de aquí vamos creando los botones correspondientes a las diferentes opciones:
 
-btnShutdown = Button(frame, text="Apagar Dispositivos", justify= CENTER, command=lambda: apagado(raiz))
-btnReboot = Button(frame, text="Reiniciar Dispositivos", justify= CENTER, command=lambda: reinicio(raiz))
-btnReset = Button(frame, text="Resetear Dispositivos", justify= CENTER, command=lambda: reseteo(raiz))
-btnEstado = Button(frame, text="Consultar Estado de los Dispositivos", justify= CENTER, command=lambda: estado(raiz))
+btnShutdown = Button(frame, text="Apagar Dispositivos/Hosts", justify= CENTER, command=lambda: apagado(raiz))
+btnReboot = Button(frame, text="Reiniciar Dispositivos/Hosts", justify= CENTER, command=lambda: reinicio(raiz))
+btnReset = Button(frame, text="Resetear Dispositivos/Hosts", justify= CENTER, command=lambda: reseteo(raiz))
+btnEstado = Button(frame, text="Consultar Estado de los Dispositivos/Hosts", justify= CENTER, command=lambda: estado(raiz))
 
 btnShutdown.pack(fill="x", padx=10, pady=10)
 btnReboot.pack(fill="x", padx=10, pady=10)

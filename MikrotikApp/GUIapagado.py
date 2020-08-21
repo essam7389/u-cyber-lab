@@ -8,9 +8,11 @@ def apagado(raiz):
     :return: No devuelve nada
     '''
     shutdownWindow = Toplevel(raiz)
-    shutdownWindow.title("Apagar Dispositivos")
+    shutdownWindow.title("Apagar Dispositivos/Hosts")
     shutdownWindow.wm_resizable(0, 0)
     shutdownWindow.geometry("400x250")
+    icono = PhotoImage(file='gui-icon.png')
+    shutdownWindow.iconphoto(False, icono)
 
     frame_reinicio = Frame(shutdownWindow)
     # frame.pack(fill="both", expand="true", pady=15)  # Empaquetamos el frame dentro de la ventana
@@ -20,9 +22,9 @@ def apagado(raiz):
     Label(shutdownWindow, text="Por favor seleccione una opción: ").pack()
     # Opciones básicas, se debe elegir una u otra pero no ambas
 
-    shutdown_all = Radiobutton(shutdownWindow, text="Apagar todos los dispositivos", variable=op, value=1,
+    shutdown_all = Radiobutton(shutdownWindow, text="Apagar todos los dispositivos/hosts", variable=op, value=1,
                              command=lambda: disabled(checkBtns))
-    shutdown_single = Radiobutton(shutdownWindow, text="Apagar un dispositivo concreto", variable=op, value=2,
+    shutdown_single = Radiobutton(shutdownWindow, text="Apagar un dispositivo/host concreto", variable=op, value=2,
                                 command=lambda: enabled(checkBtns))
 
     shutdown_all.pack()

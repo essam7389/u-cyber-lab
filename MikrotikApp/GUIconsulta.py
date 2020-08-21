@@ -10,6 +10,8 @@ def estado(raiz):
     stateWindow.title("Consultar Dispositivos")
     stateWindow.wm_resizable(0, 0)
     stateWindow.geometry("400x250")
+    icono = PhotoImage(file='gui-icon.png')
+    stateWindow.iconphoto(False, icono)
 
     op = IntVar()
     #Texto previo a las opciones básicas
@@ -17,8 +19,8 @@ def estado(raiz):
 
     #Opciones básicas, se debe elegir una u otra pero no ambas
 
-    consultar_all = Radiobutton(stateWindow, text="Consultar todos los dispositivos", variable=op, value=1, command=lambda: disabled(checkBtns))
-    consultar_single = Radiobutton(stateWindow, text="Consultar un dispositivo concreto", variable=op, value=2, command=lambda: enabled(checkBtns))
+    consultar_all = Radiobutton(stateWindow, text="Consultar todos los dispositivos/hosts", variable=op, value=1, command=lambda: disabled(checkBtns))
+    consultar_single = Radiobutton(stateWindow, text="Consultar un dispositivo/host concreto", variable=op, value=2, command=lambda: enabled(checkBtns))
 
     consultar_all.pack()
     consultar_single.pack()
@@ -79,7 +81,6 @@ def estado(raiz):
     # disable the widget so users can't insert text into it
     checklist.configure(state="disabled")
 
-    print("HE TERMINADO EL BUCLE")
     #Botón de confirmación que pasa a la función controller 3 argumentos (la acción (Consultar), la operación deseada y los valores de los checks en ID
     btnConfirmation = Button(stateWindow, text="Confirmar acción", command=lambda: [controller(accion, getOpValues(op.get()), getCheckValuesDevices(variables_devices, ids_devices, op.get()), raiz), stateWindow.destroy()])
     btnConfirmation.pack()

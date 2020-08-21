@@ -46,7 +46,7 @@ def controller(accion, operacion, dispositivos = [], GUI=None, rutas = []):
             ip = direccion.get("nics")['management']['IP']
             ssh = connection(ip, port, username, password)
             apagar(ssh)
-            ssh.close()
+
 
         for host in diccionario_hosts.get("hosts"):
             # Ahora van los host
@@ -57,7 +57,7 @@ def controller(accion, operacion, dispositivos = [], GUI=None, rutas = []):
             ip = host.get("nics")['management']['IP']
             ssh = connection(ip, port, username, password)
             apagarHost(ssh)
-            ssh.close()
+
 
 
 
@@ -70,7 +70,7 @@ def controller(accion, operacion, dispositivos = [], GUI=None, rutas = []):
             ip = direccion.get("nics")['management']['IP']
             ssh = connection(ip, port, username, password)
             reboot(ssh)
-            ssh.close()
+
 
         for host in diccionario_hosts.get("hosts"):
             # Ahora van los host
@@ -81,7 +81,7 @@ def controller(accion, operacion, dispositivos = [], GUI=None, rutas = []):
             ip = host.get("nics")['management']['IP']
             ssh = connection(ip, port, username, password)
             reiniciarHost(ssh)
-            ssh.close()
+
 
     elif(accion == "Resetear" and rutas != []):
         i = 0
@@ -92,8 +92,10 @@ def controller(accion, operacion, dispositivos = [], GUI=None, rutas = []):
             ip = direccion.get("nics")['management']['IP']
             ssh = connection(ip, port, username, password)
             print("LA RUTA ES= ")
-            print(rutas[i].name)
-            reset(ssh, rutas[i].name)
+            ruta = str(rutas[i])
+            print(ruta)
+
+            reset(ssh, ruta)
             ssh.close()
             i += 1
 
@@ -134,7 +136,9 @@ def controller(accion, operacion, dispositivos = [], GUI=None, rutas = []):
             if (existKey(direccion.get("nics").keys(), "data")):
                 ip_datos = direccion.get("nics")['data']['IP']
 
+
             respuesta = estado(ip_gestion, ip_datos)
+
 
             names.append(direccion["name"])
 
@@ -143,8 +147,10 @@ def controller(accion, operacion, dispositivos = [], GUI=None, rutas = []):
             response_gestion.append(respuesta[0])
             response_datos.append(respuesta[1])
 
+        import time
+        print("Son las:")
+        print(time.strftime('%H:%M:%S'))  # Hora actual
 
-        print("El estado de la interfáz gráfica es = ")
         if(GUI.state()):
             imprimirEstadoGUI(GUI, names, response_gestion, response_datos, ips_gestion, ips_datos)
         else:

@@ -11,3 +11,4 @@ def apagarHost(ssh):
     stdout = stdout.readlines()
     print(stdout)
     print("Apagando...")
+    ssh.close()

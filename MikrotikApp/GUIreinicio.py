@@ -18,13 +18,13 @@ def reinicio(raiz):
 
     #Opciones básicas, se debe elegir una u otra pero no ambas
 
-    Reboot_all = Radiobutton(rebootWindow, text="Reiniciar todos los dispositivos", variable=op, value=1, command=lambda: disabled(checkBtns))
-    Reboot_single = Radiobutton(rebootWindow, text="Reiniciar un dispositivo concreto", variable=op, value=2, command=lambda: enabled(checkBtns))
-    Reboot_single_host = Radiobutton(rebootWindow, text="Reiniciar un host concreto", variable=op, value=3, command=lambda: enabled(checkBtns))
+    Reboot_all = Radiobutton(rebootWindow, text="Reiniciar todos los dispositivos/hosts", variable=op, value=1, command=lambda: disabled(checkBtns))
+    Reboot_single = Radiobutton(rebootWindow, text="Reiniciar un dispositivo/host concreto", variable=op, value=2, command=lambda: enabled(checkBtns))
+
 
     Reboot_all.pack()
     Reboot_single.pack()
-    Reboot_single_host.pack()
+
 
     #Acción correspondiente a la opción escogida en el menú principal que se le pasará al controlador
     accion = "Reiniciar"
